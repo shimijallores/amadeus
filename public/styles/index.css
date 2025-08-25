@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@layer base {
+  html,
+  body {
+    @apply m-0 p-0 box-border w-full h-svh;
+  }
+
+  [x-cloak] {
+    display: none;
+  }
+}
