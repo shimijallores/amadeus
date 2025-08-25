@@ -4,105 +4,122 @@ This document guides AI agents working in the Amadeus Global Distribution System
 
 ## Project Architecture
 
-- **MVC Structure**: Custom MVC framework with Core system classes and Http components
-  - `Core/`: Framework classes (Router, Container, Database, etc)
-  - `Http/`: MVC components (controllers, models, views)
-  - `public/`: Web root with assets and entry point
+- **Custom MVC Framework**: No Laravel/Symfony - everything is custom-built
+  - `Core/`: Framework classes (Router, Container, Database, Session, Validator)  
+  - `Http/`: MVC components (controllers, models, views, forms)
+  - `public/`: Web root with assets and entry point (`index.php`)
   
-- **Key Components**:
-  - **Router** (`Core/Router.php`): Routes requests to controllers, handles HTTP methods
-  - **Container** (`Core/Container.php`): Dependency injection container for services
-  - **Database** (`Core/Database.php`): PDO wrapper for DB operations
-  - **Session** (`Core/Session.php`): Manages session state and flash messages
-  - **Forms** (`Http/forms/`): Form validation and processing
-  - **Middleware** (`Core/Middleware/`): Auth and request filtering
+- **Key Framework Components**:
+  - **Router** (`Core/Router.php`): Fluent API with middleware chaining
+  - **Container** (`Core/Container.php`): Dependency injection container
+  - **Database** (`Core/Database.php`): PDO wrapper with method chaining
+  - **Session** (`Core/Session.php`): Flash messages and session management
+  - **Validator** (`Core/Validator.php`): Input validation with image upload support
+
+## Frontend Stack
+
+- **Alpine.js**: Primary JavaScript framework for reactivity
+  - Load order: `main.js` → Alpine.js CDN (deferred)
+  - Use `x-data`, `x-model`, `x-show` for component state
+  - Global functions via `window.functionName = () => {}`
+  
+- **TailwindCSS v4**: Custom build process
+  - Config: `public/styles/index.css` with `@import "tailwindcss"`
+  - Build: `npm run dev` for development watch mode
+  - Output: `public/dist/style.css`
+
+- **Dynamic Components Pattern**: 
+  ```javascript
+  // public/scripts/main.js
+  const FilterComponent = {
+      init(containerId, fields, tableId) { /* ... */ },
+      generateFilterForm() { /* Alpine.js integration */ }
+  };
+  ```
 
 ## Development Workflows
 
 ### Environment Setup
-1. Copy `.env.example` to `.env` and configure:
-   ```env
-   DATABASE_HOSTNAME=localhost
-   DATABASE_USERNAME=your_db_user
-   DATABASE_PASSWORD=your_db_password
-   DATABASE_NAME=your_db_name
-   ```
+```bash
+# 1. Environment file
+cp .env.example .env
 
-2. Install dependencies:
-   ```bash
-   composer install
-   npm install
-   ```
+# 2. Dependencies  
+composer install
+npm install
 
-3. Build assets:
-   ```bash
-   npm run dev # For development CSS build
-   ```
+# 3. Build assets (watch mode)
+npm run dev
+```
 
-### Adding New Features
+### Database Configuration
+```env
+DATABASE_HOSTNAME=localhost
+DATABASE_USERNAME=root
+DATABASE_PASSWORD=
+DATABASE_NAME=amadeus
+```
 
-1. **Routes**: Add to `routes.php` using the Router's fluent API:
+### Adding Features
+
+1. **Routes** (`routes.php`): Method chaining with middleware
    ```php
-   $router->get('/path', 'controller/action.php');
-   $router->post('/path', 'controller/action.php')->only('admin');
+   $router->get('/airlines', 'airlines/index.php');
+   $router->patch('/airlines', 'airlines/update.php')->only('admin');
    ```
 
-2. **Forms**: Extend `Http/forms/Form.php` for validation:
-   ```php 
-   class NewForm extends Form {
-       public function __construct($attributes) {
-           // Add validation rules using Core\Validator
-       }
-   }
+2. **Controllers**: Single-action files in `Http/controllers/`
+   ```php
+   use Core\App;
+   use Core\Database;
+   
+   $db = App::resolve(Database::class);
+   $data = $db->query("SELECT * FROM table")->get();
+   require base_path('Http/views/resource/action.view.php');
    ```
 
-3. **Controllers**: Follow pattern in `Http/controllers/`:
-   - Single responsibility files
-   - Use models for business logic
-   - Flash session messages for user feedback
+3. **Views**: Include partials, use Alpine.js for interactivity
+   ```php
+   <main x-data="{showModal: false, editData: null}">
+   ```
 
-4. **Models**: Place in `Http/models/` with standard CRUD operations
+## Critical Patterns
 
-## Common Patterns
-
-### Authentication
-- Uses `Core/Middleware/Admin.php` for protected routes
-- Session-based auth with `Core/Session.php`
-- Login flow in `Http/controllers/login/`
+### Alpine.js Integration
+- **Modal Pattern**: `x-show="showModal"` with `x-transition`
+- **Data Binding**: `:value="editData ? editData.field ?? '' : ''"`  
+- **Event Handling**: `@click="showModal=true; editData = <?= json_encode($data) ?>"`
+- **Component State**: Always initialize data in main container's `x-data`
 
 ### Form Processing
-1. Validate input with Form classes
-2. Handle files with `Validator::image()`
-3. Flash errors to session if validation fails
-4. Redirect after successful processing
+1. Extend `Http/forms/Form.php` for validation
+2. Use `Validator::image()` for file uploads → `public/uploads/`
+3. Flash errors: `Session::flash('errors', $errors)`
+4. Redirect after POST/PATCH/DELETE operations
 
-### Database Operations
-- Use `Core\Database` for queries:
-  ```php
-  $db->query('SELECT * FROM table WHERE id = :id', ['id' => $id])->find();
-  ```
-- Models handle business logic and complex queries
-- Use prepared statements for all queries
+### Database Operations  
+```php
+// Method chaining pattern
+$db->query('SELECT * FROM table WHERE id = :id', ['id' => $id])->find();
+$db->query('INSERT INTO table (field) VALUES (:field)', $params);
+```
 
-## Integration Points
-
-- **Frontend**: TailwindCSS for styling
-- **JavaScript**: Alpine.js for interactivity
-- **File Uploads**: Handled in `public/uploads/` directory
-- **Email**: PHPMailer integration available
-
-## Project Conventions
-
-- Use validation before DB operations
-- Flash messages for user feedback
-- RESTful route naming
-- Controller files follow single action pattern
-- Middleware for auth checks
+### Client-Side Filtering
+- **Table Structure**: Add `data-field="fieldname"` to `<td>` elements
+- **Filter Component**: Initialize via `FilterComponent.init(containerId, fields, tableId)`
+- **Dynamic Forms**: Checkbox-controlled input enabling with Alpine.js reactivity
 
 ## Common Pitfalls
 
-1. Always validate file uploads with `Validator::image()`
-2. Remember to call `Session::unflash()` after redirects
-3. Use `redirect()` after POST/PATCH/DELETE operations
-4. Check auth state with proper middleware
-5. Sanitize user input before database operations
+1. **Alpine.js Template Literals**: Avoid complex `${}` in `x-data` - use closure variables
+2. **Script Loading**: `main.js` must load before Alpine.js
+3. **Null Safety**: Always use `editData ? editData.field ?? '' : ''` in Alpine bindings
+4. **File Uploads**: Validate with `Validator::image()`, store in `public/uploads/`
+5. **Session Management**: Call `Session::unflash()` after redirects (handled in `index.php`)
+
+## File Structure Conventions
+- Controllers: Single action per file (`airlines/index.php`, `airlines/update.php`)
+- Views: Match controller structure (`views/airlines/index.view.php`)  
+- Models: Business logic in `Http/models/`
+- Forms: Validation classes in `Http/forms/`
+- Scripts: Reusable components in `public/scripts/`

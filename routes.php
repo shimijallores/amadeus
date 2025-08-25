@@ -5,6 +5,16 @@ $router->get('/', 'airlines/index.php');
 $router->delete('/airlines', 'airlines/destroy.php');
 $router->patch('/airlines', 'airlines/update.php');
 
+// Airports
+$router->get('/airports', 'airports/index.php');
+$router->delete('/airports', 'airports/destroy.php');
+$router->patch('/airports', 'airports/update.php');
+
+// Aircraft
+$router->get('/aircraft', 'aircraft/index.php');
+$router->delete('/aircraft', 'aircraft/destroy.php');
+$router->patch('/aircraft', 'aircraft/update.php');
+
 //Login
 $router->get('/login', 'login/index.php');
 $router->post('/login', 'login/verify.php');

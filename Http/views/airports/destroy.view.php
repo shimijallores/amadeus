@@ -19,10 +19,10 @@
         </div>
         <!-- Dialog Body -->
         <div class="px-4 py-8">
-            <p>Are you sure you want to delete this airline? This action is irreversible.</p>
+            <p>Are you sure you want to delete this airport? This action is irreversible.</p>
         </div>
         <!-- Dialog Footer -->
-        <form action="/airlines" method="POST" class="flex flex-col-reverse justify-between gap-2 border-t border-neutral-300 bg-neutral-50/60 p-4 dark:border-neutral-700 dark:bg-neutral-950/20 sm:flex-row sm:items-center md:justify-end">
+        <form action="/airports" method="POST" class="flex flex-col-reverse justify-between gap-2 border-t border-neutral-300 bg-neutral-50/60 p-4 dark:border-neutral-700 dark:bg-neutral-950/20 sm:flex-row sm:items-center md:justify-end">
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="id" :value="deleteId">
             <button x-on:click="showDeleteModal = false" type="button"
