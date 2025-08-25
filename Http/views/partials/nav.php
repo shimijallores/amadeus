@@ -3,7 +3,7 @@
     aria-label="penguin ui menu">
     <!-- Brand Logo -->
     <a href="#" class="text-2xl font-bold text-neutral-900 dark:text-white">
-        <span>Amade<span class="text-black dark:text-white">us</span></span>
+        <span>Amade<span class="text-black dark:text-white">us</span> - Global Distribution System</span>
         <!-- <img src="./your-logo.svg" alt="brand logo" class="w-10" /> -->
     </a>
     <!-- Desktop Menu -->
@@ -39,8 +39,8 @@
             </a>
         </li>
         <li>
-            <a href="/schedules"
-                class="<?= url('/schedule') ? 'bg-neutral-700/50 py-2 px-3 rounded-md' : '' ?> font-medium text-black underline-offset-2 hover:text-black hover:opacity-70 focus:outline-hidden focus:underline dark:text-white dark:hover:text-white"
+            <a href="/flight-schedules"
+                class="<?= url('/flight-schedules') ? 'bg-neutral-700/50 py-2 px-3 rounded-md' : '' ?> font-medium text-black underline-offset-2 hover:text-black hover:opacity-70 focus:outline-hidden focus:underline dark:text-white dark:hover:text-white"
                 aria-current="page">Schedules
             </a>
         </li>

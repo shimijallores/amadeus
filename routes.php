@@ -25,6 +25,11 @@ $router->get('/flight-routes', 'flight_routes/index.php');
 $router->delete('/flight-routes', 'flight_routes/destroy.php');
 $router->patch('/flight-routes', 'flight_routes/update.php');
 
+// Flight Schedules
+$router->get('/flight-schedules', 'flight_schedules/index.php');
+$router->delete('/flight-schedules', 'flight_schedules/destroy.php');
+$router->patch('/flight-schedules', 'flight_schedules/update.php');
+
 //Login
 $router->get('/login', 'login/index.php');
 $router->post('/login', 'login/verify.php');

@@ -24,7 +24,7 @@
                 <input type="hidden" name="id" :value="editData ? editData.id : ''">
                 <div class="flex w-full flex-col gap-1 text-white">
                     <label for="airline_id" class="w-fit pl-0.5 text-sm text-white">AIRLINE</label>
-                    <select id="airline_id" name="airline_id" class="w-full rounded-sm border border-neutral-300 min-w-92 font-medium bg-neutral-50 p-3 text-black text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
+                    <select id="airline_id" name="airline_id" class="w-full rounded-sm border border-neutral-300 min-w-92 font-medium bg-neutral-50 p-3 text-black dark:text-white text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
                         <?php foreach ($airlines as $airline) : ?>
                             <option :selected="editData && editData.airline_id == <?= $airline['id'] ?>" value="<?= $airline['id'] ?>"><?= htmlspecialchars($airline['airline']) ?></option>
                         <?php endforeach; ?>
@@ -32,7 +32,7 @@
                 </div>
                 <div class="flex w-full flex-col gap-1 text-white">
                     <label for="origin_airport_id" class="w-fit pl-0.5 text-sm text-white">ORIGIN AIRPORT</label>
-                    <select id="origin_airport_id" name="origin_airport_id" class="w-full rounded-sm border border-neutral-300 min-w-92 font-medium bg-neutral-50 p-3 text-black text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
+                    <select id="origin_airport_id" name="origin_airport_id" class="w-full rounded-sm border border-neutral-300 min-w-92 font-medium bg-neutral-50 p-3 text-black dark:text-white text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
                         <?php foreach ($airports as $airport) : ?>
                             <option :selected="editData && editData.origin_airport_id == <?= $airport['id'] ?>" value="<?= $airport['id'] ?>"><?= htmlspecialchars($airport['airport_name']) ?></option>
                         <?php endforeach; ?>
@@ -40,7 +40,7 @@
                 </div>
                 <div class="flex w-full flex-col gap-1 text-white">
                     <label for="destination_airport_id" class="w-fit pl-0.5 text-sm text-white">DESTINATION AIRPORT</label>
-                    <select id="destination_airport_id" name="destination_airport_id" class="w-full rounded-sm border border-neutral-300 min-w-92 font-medium bg-neutral-50 p-3 text-black text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
+                    <select id="destination_airport_id" name="destination_airport_id" class="w-full rounded-sm border border-neutral-300 min-w-92 font-medium bg-neutral-50 p-3 text-black dark:text-white text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
                         <?php foreach ($airports as $airport) : ?>
                             <option :selected="editData && editData.destination_airport_id == <?= $airport['id'] ?>" value="<?= $airport['id'] ?>"><?= htmlspecialchars($airport['airport_name']) ?></option>
                         <?php endforeach; ?>
@@ -48,14 +48,14 @@
                 </div>
                 <div class="flex w-full flex-col gap-1 text-white">
                     <label for="round_trip" class="w-fit pl-0.5 text-sm text-white">ROUND TRIP</label>
-                    <select id="round_trip" name="round_trip" class="w-full rounded-sm border border-neutral-300 min-w-92 font-medium bg-neutral-50 p-3 text-black text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
+                    <select id="round_trip" name="round_trip" class="w-full rounded-sm border border-neutral-300 min-w-92 font-medium bg-neutral-50 p-3 text-black dark:text-white text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
                         <option :selected="editData && editData.round_trip == 0" value="0">No</option>
                         <option :selected="editData && editData.round_trip == 1" value="1">Yes</option>
                     </select>
                 </div>
                 <div class="flex w-full flex-col gap-1 text-white">
                     <label for="aircraft_id" class="w-fit pl-0.5 text-sm text-white">AIRCRAFT</label>
-                    <select id="aircraft_id" name="aircraft_id" class="w-full rounded-sm border border-neutral-300 min-w-92 font-medium bg-neutral-50 p-3 text-black text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
+                    <select id="aircraft_id" name="aircraft_id" class="w-full rounded-sm border border-neutral-300 min-w-92 font-medium bg-neutral-50 p-3 text-black dark:text-white text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
                         <?php foreach ($aircraft as $plane) : ?>
                             <option :selected="editData && editData.aircraft_id == <?= $plane['id'] ?>" value="<?= $plane['id'] ?>"><?= htmlspecialchars($plane['model']) ?></option>
                         <?php endforeach; ?>
