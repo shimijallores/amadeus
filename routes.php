@@ -15,6 +15,16 @@ $router->get('/aircraft', 'aircraft/index.php');
 $router->delete('/aircraft', 'aircraft/destroy.php');
 $router->patch('/aircraft', 'aircraft/update.php');
 
+// Airline Users
+$router->get('/airline-users', 'airline_users/index.php');
+$router->delete('/airline-users', 'airline_users/destroy.php');
+$router->patch('/airline-users', 'airline_users/update.php');
+
+// Flight Routes
+$router->get('/flight-routes', 'flight_routes/index.php');
+$router->delete('/flight-routes', 'flight_routes/destroy.php');
+$router->patch('/flight-routes', 'flight_routes/update.php');
+
 //Login
 $router->get('/login', 'login/index.php');
 $router->post('/login', 'login/verify.php');
