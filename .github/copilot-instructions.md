@@ -11,10 +11,15 @@ This document guides AI agents working in the Amadeus Global Distribution System
   
 - **Key Framework Components**:
   - **Router** (`Core/Router.php`): Fluent API with middleware chaining
-  - **Container** (`Core/Container.php`): Dependency injection container
+  - **Container** (`Core/Container.php`): Dependency injection container with `App::resolve()`
   - **Database** (`Core/Database.php`): PDO wrapper with method chaining
   - **Session** (`Core/Session.php`): Flash messages and session management
   - **Validator** (`Core/Validator.php`): Input validation with image upload support
+
+- **Bootstrap Flow**: `public/index.php` → `bootstrap.php` → routes → controllers → views
+  - Environment variables loaded via `vlucas/phpdotenv`
+  - Container bindings for Database and config in `bootstrap.php`
+  - Global ValidationException handling with redirect-after-POST pattern
 
 ## Frontend Stack
 
@@ -28,13 +33,13 @@ This document guides AI agents working in the Amadeus Global Distribution System
   - Build: `npm run dev` for development watch mode
   - Output: `public/dist/style.css`
 
-- **Dynamic Components Pattern**: 
+- **FilterComponent Pattern** (`public/scripts/main.js`): 
   ```javascript
-  // public/scripts/main.js
-  const FilterComponent = {
-      init(containerId, fields, tableId) { /* ... */ },
-      generateFilterForm() { /* Alpine.js integration */ }
-  };
+  // Reusable table filtering with Alpine.js integration
+  FilterComponent.init('filterContainer', [
+      ['field_name', 'Display Label'],
+      ['another_field', 'Another Label']
+  ], 'tableId');
   ```
 
 ## Development Workflows
@@ -60,62 +65,129 @@ DATABASE_PASSWORD=
 DATABASE_NAME=amadeus
 ```
 
-### Adding Features
+## CRUD Implementation Pattern
 
-1. **Routes** (`routes.php`): Method chaining with middleware
-   ```php
-   $router->get('/airlines', 'airlines/index.php');
-   $router->patch('/airlines', 'airlines/update.php')->only('admin');
-   ```
+**Complete CRUD requires 7 files** following this exact structure:
 
-2. **Controllers**: Single-action files in `Http/controllers/`
-   ```php
-   use Core\App;
-   use Core\Database;
-   
-   $db = App::resolve(Database::class);
-   $data = $db->query("SELECT * FROM table")->get();
-   require base_path('Http/views/resource/action.view.php');
-   ```
+### 1. Routes (`routes.php`)
+```php
+$router->get('/resource', 'resource/index.php');
+$router->patch('/resource', 'resource/update.php');  
+$router->delete('/resource', 'resource/destroy.php');
+```
 
-3. **Views**: Include partials, use Alpine.js for interactivity
-   ```php
-   <main x-data="{showModal: false, editData: null}">
-   ```
+### 2. Controllers (`Http/controllers/resource/`)
+- `index.php`: Query with JOINs for display, load reference data for dropdowns
+- `update.php`: Form validation → Model update → redirect
+- `destroy.php`: Model destroy → redirect
+
+```php
+// Controllers always follow this pattern
+use Core\App;
+use Core\Database;
+
+$db = App::resolve(Database::class);
+$data = $db->query("SELECT * FROM table")->get();
+require base_path('Http/views/resource/action.view.php');
+```
+
+### 3. Form Validation (`Http/forms/ResourceForm.php`)
+```php
+class ResourceForm extends Form {
+    public function __construct($attributes) {
+        $this->attributes = $attributes;
+        // Validation rules using $this->error('field', 'message')
+    }
+}
+```
+
+### 4. Models (`Http/models/Resource.php`)
+```php
+class Resource {
+    public function update(array $attributes): void {
+        // Database update
+        Session::flash('success', 'Message');
+    }
+    public function destroy(array $attributes): void {
+        // Database delete  
+        Session::flash('success', 'Message');
+    }
+}
+```
+
+### 5. Views (`Http/views/resource/`)
+- `index.view.php`: Main table with FilterComponent integration
+- `update.view.php`: Alpine.js modal with form fields
+- `destroy.view.php`: Confirmation modal
 
 ## Critical Patterns
 
-### Alpine.js Integration
-- **Modal Pattern**: `x-show="showModal"` with `x-transition`
-- **Data Binding**: `:value="editData ? editData.field ?? '' : ''"`  
-- **Event Handling**: `@click="showModal=true; editData = <?= json_encode($data) ?>"`
-- **Component State**: Always initialize data in main container's `x-data`
-
-### Form Processing
-1. Extend `Http/forms/Form.php` for validation
-2. Use `Validator::image()` for file uploads → `public/uploads/`
-3. Flash errors: `Session::flash('errors', $errors)`
-4. Redirect after POST/PATCH/DELETE operations
-
-### Database Operations  
+### Alpine.js Modal Pattern
 ```php
-// Method chaining pattern
-$db->query('SELECT * FROM table WHERE id = :id', ['id' => $id])->find();
-$db->query('INSERT INTO table (field) VALUES (:field)', $params);
+// Main container x-data
+<main x-data="{showDeleteModal: false, deleteId: null, showUpdateModal: false, editData: null}">
+
+// Modal trigger
+<button @click="showUpdateModal=true; editData = <?= htmlspecialchars(json_encode($item)) ?>">
+
+// Modal form bindings (NULL SAFETY CRITICAL)
+:value="editData ? editData.field ?? '' : ''"
+:selected="editData && editData.field == 'value'"
 ```
 
-### Client-Side Filtering
-- **Table Structure**: Add `data-field="fieldname"` to `<td>` elements
-- **Filter Component**: Initialize via `FilterComponent.init(containerId, fields, tableId)`
-- **Dynamic Forms**: Checkbox-controlled input enabling with Alpine.js reactivity
+### Form Processing Flow
+1. Form validates via `ResourceForm::validate($attributes)`
+2. Throws `ValidationException` on failure → caught in `index.php` → redirected with flash
+3. Success: Model method → `Session::flash()` → `redirect()`
+4. `Session::unflash()` called automatically in `index.php`
+
+### Database Query Patterns
+```php
+// Method chaining for single/multiple results
+$db->query('SELECT * FROM table WHERE id = :id', ['id' => $id])->find();
+$db->query('SELECT * FROM table')->get();
+
+// Complex JOINs for display (see flight_schedules/index.php)
+$db->query("
+    SELECT fs.*, au.user as pilot_name, a.airline as airline_name
+    FROM flight_schedules fs
+    LEFT JOIN airline_users au ON fs.airline_user_id = au.id  
+    LEFT JOIN airlines a ON au.airline_id = a.id
+")->get();
+```
+
+### Dark Mode Text Pattern
+All form inputs must include both light and dark text colors:
+```css
+class="...text-black dark:text-white..."
+```
+
+### Client-Side Filtering Setup
+```php
+// Table cells need data-field attributes  
+<td data-field="field_name"><?= $data['field_name'] ?></td>
+
+// JavaScript initialization in view
+FilterComponent.init('filterContainer', [
+    ['field_name', 'Display Name']
+], 'tableId');
+```
+
+## Aviation Domain Schema
+- `airlines` → `airline_users` (staff/admin/pilots)
+- `airports` linked via `flight_routes` (origin/destination)
+- `aircraft` assigned to routes
+- `flight_schedules` link users to routes with varchar dates/times
+- Foreign keys cascade on DELETE
 
 ## Common Pitfalls
 
-1. **Alpine.js Template Literals**: Avoid complex `${}` in `x-data` - use closure variables
-2. **Script Loading**: `main.js` must load before Alpine.js
-3. **Null Safety**: Always use `editData ? editData.field ?? '' : ''` in Alpine bindings
-4. **File Uploads**: Validate with `Validator::image()`, store in `public/uploads/`
-5. **Session Management**: Call `Session::unflash()` after redirects (handled in `index.php`)
+1. **NULL Safety**: Always use `editData ? editData.field ?? '' : ''` in Alpine bindings
+2. **Column Names**: Database uses `user` not `name` in `airline_users` table  
+3. **Form Method Spoofing**: Use `<input type="hidden" name="_method" value="PATCH">` 
+4. **Script Loading**: `main.js` must load before Alpine.js CDN
+5. **Session Management**: `Session::unflash()` handled automatically in `index.php`
+6. **Image Uploads**: Use `Validator::image()` → store in `public/uploads/`
 
 ## File Structure Conventions
 - Controllers: Single action per file (`airlines/index.php`, `airlines/update.php`)

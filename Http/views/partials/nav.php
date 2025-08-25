@@ -2,7 +2,7 @@
     class="flex items-center justify-between bg-neutral-50 border-b border-neutral-300 px-6 py-4 dark:border-neutral-700 dark:bg-neutral-900"
     aria-label="penguin ui menu">
     <!-- Brand Logo -->
-    <a href="#" class="text-2xl font-bold text-neutral-900 dark:text-white">
+    <a href="/" class="text-2xl font-bold text-neutral-900 dark:text-white">
         <span>Amade<span class="text-black dark:text-white">us</span> - Global Distribution System</span>
         <!-- <img src="./your-logo.svg" alt="brand logo" class="w-10" /> -->
     </a>
