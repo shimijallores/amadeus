@@ -1,16 +1,16 @@
 <nav x-data="{ mobileMenuIsOpen: false }" x-on:click.away="mobileMenuIsOpen = false"
-    class="flex items-center justify-between bg-neutral-50 border-b border-neutral-300 px-6 py-4 dark:border-neutral-700 dark:bg-neutral-900"
+    class="flex justify-between items-center bg-neutral-50 dark:bg-neutral-900 px-6 py-4 border-neutral-300 dark:border-neutral-700 border-b"
     aria-label="penguin ui menu">
     <!-- Brand Logo -->
-    <a href="/" class="text-2xl font-bold text-neutral-900 dark:text-white">
+    <a href="/" class="font-bold text-neutral-900 dark:text-white text-2xl">
         <span>Amade<span class="text-black dark:text-white">us</span> - Global Distribution System</span>
         <!-- <img src="./your-logo.svg" alt="brand logo" class="w-10" /> -->
     </a>
     <!-- Desktop Menu -->
-    <ul class="hidden items-center gap-4 sm:flex">
+    <ul class="hidden sm:flex items-center gap-4">
         <li>
             <a href="/"
-                class="<?= url('/') ? 'bg-neutral-700/50 py-2 px-3 rounded-md' : '' ?> font-medium underline-offset-2 hover:text-black transition duration-100 hover:opacity-70 focus:outline-hidden focus:underline dark:text-white dark:hover:text-white"
+                class="<?= url('/airlines') ? 'bg-neutral-700/50 py-2 px-3 rounded-md' : '' ?> font-medium underline-offset-2 hover:text-black transition duration-100 hover:opacity-70 focus:outline-hidden focus:underline dark:text-white dark:hover:text-white"
                 aria-current="page">Airlines
             </a>
         </li>
@@ -49,7 +49,7 @@
         <!-- CTA Button -->
         <li>
             <a href="/register"
-                class="rounded-sm bg-black border border-black px-4 py-2 text-center text-sm font-medium tracking-wide text-neutral-100 hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:opacity-100 active:outline-offset-0 dark:bg-white dark:border-white dark:text-black dark:focus-visible:outline-white">Sign
+                class="bg-black dark:bg-white hover:opacity-75 active:opacity-100 px-4 py-2 border dark:border-white border-black rounded-sm focus-visible:outline-2 focus-visible:outline-black dark:focus-visible:outline-white focus-visible:outline-offset-2 active:outline-offset-0 font-medium text-neutral-100 dark:text-black text-sm text-center tracking-wide">Sign
                 Up
             </a>
         </li>

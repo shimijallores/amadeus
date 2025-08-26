@@ -1,7 +1,7 @@
 <?php
 
 // Airlines
-$router->get('/', 'airlines/index.php');
+$router->get('/airlines', 'airlines/index.php');
 $router->delete('/airlines', 'airlines/destroy.php');
 $router->patch('/airlines', 'airlines/update.php');
 
