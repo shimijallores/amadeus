@@ -56,26 +56,7 @@ function old($key, $default = '')
     return Session::get('old')[$key] ?? $default;
 }
 
-function calculateTotalPrice($price, $quantity): float|string
+function assets($path = ''): string
 {
-    if ($price < 0 || $quantity < 0) {
-        return "Invalid input";
-    }
-    return round($price * $quantity, 2);
-}
-
-function order_status(array $order, string $status): bool
-{
-    return strtolower($order['status']) === $status;
-}
-
-function previous_url(): string
-{
-    $prev = parse_url($_SERVER['HTTP_REFERER']);
-    return $prev['path'] . '?' . $prev['query'];
-}
-
-function generateUniqueId(): string
-{
-    return uniqid(rand(), true);
+    return $_ENV['APP_ENV'] ? 'public/' . $path : $path;
 }
