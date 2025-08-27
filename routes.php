@@ -16,6 +16,7 @@ $router->post('/airports', 'airports/store.php');
 $router->get('/aircraft', 'aircraft/index.php');
 $router->delete('/aircraft', 'aircraft/destroy.php');
 $router->patch('/aircraft', 'aircraft/update.php');
+$router->post('/aircraft', 'aircraft/store.php');
 
 // Airline Users
 $router->get('/airline-users', 'airline_users/index.php');

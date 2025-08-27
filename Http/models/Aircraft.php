@@ -15,6 +15,17 @@ class Aircraft
         $this->db = App::resolve(Database::class);
     }
 
+    public function store(array $attributes) : void
+    {
+        $this->db->query('INSERT INTO aircraft (iata, icao, model) VALUES (:iata, :icao, :model)', [
+            'iata' => $attributes['iata'],
+            'icao' => $attributes['icao'],
+            'model' => $attributes['model'],
+        ]);
+
+        Session::flash('success', 'Aircraft updated successfully!');
+    }
+
     public function update(array $attributes): void
     {
         $this->db->query('UPDATE aircraft SET iata = :iata, icao = :icao, model = :model WHERE id = :id', [
