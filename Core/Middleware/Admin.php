@@ -5,7 +5,7 @@ class Admin
 {
     public function handle(): void
     {
-        if (! $_SESSION['admin'] ?? false) {
+        if (! $_SESSION['user'] ?? false) {
             redirect('/login');
         }
     }

@@ -4,7 +4,7 @@ namespace Core\Middleware;
 
 class Middleware
 {
-    const MAP = [
+    const array MAP = [
         'guest' => Guest::class,
         'admin' => Admin::class,
     ];

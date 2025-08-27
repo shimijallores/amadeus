@@ -15,7 +15,6 @@ class Router
             'controller' => $controller,
             'method' => $method,
             'middleware' => null,
-            'params' => null,
         ];
 
         return $this;
@@ -53,11 +52,6 @@ class Router
         return $this;
     }
 
-    public function params($key): void
-    {
-        $this->routes[array_key_last($this->routes)]['params'] = $key;
-    }
-
     /**
      * @throws \Exception
      */
@@ -66,7 +60,6 @@ class Router
         foreach ($this->routes as $route) {
             if ($route['uri'] === $uri && $route['method'] === strtoupper($method)) {
                 Middleware::resolve($route['middleware']);
-                Middleware::handle($route['params']);
 
                 return require base_path("/Http/controllers/" . $route['controller']);
             }

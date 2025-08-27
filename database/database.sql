@@ -25,16 +25,16 @@ CREATE TABLE IF NOT EXISTS `aircraft` (
 
 -- Dumping data for table amadeus.aircraft: ~10 rows (approximately)
 INSERT INTO `aircraft` (`id`, `iata`, `icao`, `model`) VALUES
-	(1, 'A1', 'ICA1', 'Airbus A320'),
-	(2, 'A2', 'ICA2', 'Boeing 737'),
-	(3, 'A3', 'ICA3', 'Embraer E190'),
-	(4, 'A4', 'ICA4', 'Bombardier Q400'),
-	(5, 'A5', 'ICA5', 'Airbus A350'),
-	(6, 'A6', 'ICA6', 'Boeing 787'),
-	(7, 'A7', 'ICA7', 'Cessna 172'),
-	(8, 'A8', 'ICA8', 'Gulfstream G650'),
-	(9, 'A9', 'ICA9', 'ATR 72'),
-	(10, 'A0', 'ICA0', 'Concorde');
+	(1, '320', 'A320', 'Airbus A320-200'),
+	(2, '321', 'A321', 'Airbus A321-200'),
+	(3, '330', 'A330', 'Airbus A330-300'),
+	(4, '738', 'B738', 'Boeing 737-800'),
+	(5, '77W', 'B77W', 'Boeing 777-300ER'),
+	(6, '789', 'B788', 'Boeing 787-9 Dreamliner'),
+	(7, '359', 'A359', 'Airbus A350-900'),
+	(8, 'AT7', 'AT76', 'ATR 72-600'),
+	(9, 'DH4', 'DH8D', 'Bombardier Dash 8 Q400'),
+	(10, 'E90', 'E190', 'Embraer E-Jet E190');
 
 -- Dumping structure for table amadeus.airlines
 CREATE TABLE IF NOT EXISTS `airlines` (
@@ -46,19 +46,20 @@ CREATE TABLE IF NOT EXISTS `airlines` (
   `country` varchar(100) NOT NULL DEFAULT '0',
   `comments` varchar(100) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table amadeus.airlines: ~9 rows (approximately)
+-- Dumping data for table amadeus.airlines: ~10 rows (approximately)
 INSERT INTO `airlines` (`id`, `iata`, `icao`, `airline`, `callsign`, `country`, `comments`) VALUES
-	(1, 'AL1', 'ICL1', 'Airline One', 'ONEAIR', 'USA', 'demodemo'),
-	(2, 'AL2', 'ICL2', 'Airline Two', 'TWOAIR', 'UK', ''),
-	(4, 'AL4', 'ICL4', 'Airline Four', 'FOURAIR', 'Germany', ''),
-	(5, 'AL5', 'ICL5', 'Airline Five', 'FIVEAIR', 'France', ''),
-	(6, 'AL6', 'ICL6', 'Airline Six', 'SIXAIR', 'Japan', ''),
-	(7, 'AL7', 'ICL7', 'Airline Seven', 'SEVENAIR', 'UAE', ''),
-	(8, 'AL8', 'ICL8', 'Airline Eight', 'EIGHTAIR', 'India', ''),
-	(9, 'AL9', 'ICL9', 'Airline Nine', 'NINEAIR', 'Brazil', ''),
-	(10, 'AL0', 'ICL0', 'Airline Ten', 'TENAIR', 'Australia', '');
+	(1, 'PR', 'PAL', 'Philippine Airlines', 'PHILIPPINE', 'Philippines', 'Philippine flag carrier'),
+	(2, '5J', 'CEB', 'Cebu Pacific', 'CEBU', 'Philippines', 'Low-cost carrier Philippines'),
+	(3, 'Z2', 'APG', 'Philippines AirAsia', 'AIRASIA', 'Philippines', 'Low-cost carrier'),
+	(4, 'SQ', 'SIA', 'Singapore Airlines', 'SINGAPORE', 'Singapore', 'Premium Asian carrier'),
+	(5, 'CX', 'CPA', 'Cathay Pacific', 'CATHAY', 'Hong Kong', 'Hong Kong flag carrier'),
+	(6, 'TG', 'THA', 'Thai Airways', 'THAI', 'Thailand', 'Thai flag carrier'),
+	(7, 'MH', 'MAS', 'Malaysia Airlines', 'MALAYSIAN', 'Malaysia', 'Malaysian flag carrier'),
+	(8, 'GA', 'GIA', 'Garuda Indonesia', 'INDONESIA', 'Indonesia', 'Indonesian flag carrier'),
+	(9, 'VN', 'HVN', 'Vietnam Airlines', 'VIETNAM', 'Vietnam', 'Vietnamese flag carrier'),
+	(10, 'CI', 'CAL', 'China Airlines', 'DYNASTY', 'Taiwan', 'Taiwanese flag carrier');
 
 -- Dumping structure for table amadeus.airline_users
 CREATE TABLE IF NOT EXISTS `airline_users` (
@@ -70,37 +71,20 @@ CREATE TABLE IF NOT EXISTS `airline_users` (
   PRIMARY KEY (`id`),
   KEY `FK__airline` (`airline_id`),
   CONSTRAINT `FK__airline` FOREIGN KEY (`airline_id`) REFERENCES `airlines` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table amadeus.airline_users: ~27 rows (approximately)
+-- Dumping data for table amadeus.airline_users: ~10 rows (approximately)
 INSERT INTO `airline_users` (`id`, `airline_id`, `user`, `password`, `type`) VALUES
-	(1, 1, 'user1a', 'pass1a', 'admin'),
-	(2, 1, 'user1b', 'pass1b', 'staff'),
-	(3, 1, 'user1c', 'pass1c', 'user'),
-	(4, 2, 'user2a', 'pass2a', 'admin'),
-	(5, 2, 'user2b', 'pass2b', 'staff'),
-	(6, 2, 'user2c', 'pass2c', 'staff'),
-	(10, 4, 'user4a', 'pass4a', 'admin'),
-	(11, 4, 'user4b', 'pass4b', 'user'),
-	(12, 4, 'user4c', 'pass4c', 'staff'),
-	(13, 5, 'user5a', 'pass5a', 'admin'),
-	(14, 5, 'user5b', 'pass5b', 'staff'),
-	(15, 5, 'user5c', 'pass5c', 'user'),
-	(16, 6, 'user6a', 'pass6a', 'admin'),
-	(17, 6, 'user6b', 'pass6b', 'staff'),
-	(18, 6, 'user6c', 'pass6c', 'user'),
-	(19, 7, 'user7a', 'pass7a', 'admin'),
-	(20, 7, 'user7b', 'pass7b', 'staff'),
-	(21, 7, 'user7c', 'pass7c', 'staff'),
-	(22, 8, 'user8a', 'pass8a', 'admin'),
-	(23, 8, 'user8b', 'pass8b', 'staff'),
-	(24, 8, 'user8c', 'pass8c', 'user'),
-	(25, 9, 'user9a', 'pass9a', 'admin'),
-	(26, 9, 'user9b', 'pass9b', 'staff'),
-	(27, 9, 'user9c', 'pass9c', 'staff'),
-	(28, 10, 'user10a', 'pass10a', 'admin'),
-	(29, 10, 'user10b', 'pass10b', 'staff'),
-	(30, 10, 'user10c', 'pass10c', 'staff');
+	(1, 1, 'pal_pilot_cruz', '$2y$10$FSdC..p9hnwfaD2BHucH9ePn.UNOYX4ezUWMDibk2Amm0omAXGViu', 'pilot'),
+	(2, 2, 'ceb_ops_santos', '$2y$10$FQOC7MEAIUWGSrxj66RieuSxVuHuI5hc8vPeylww5e9R6IUjOaaH2', 'operations'),
+	(3, 3, 'airasia_dispatch', '$2y$10$jp3OBqPp3y2oDBH1UFGQieih.BaLtvISXaDvOAkZHHAJR28zLGpV6', 'dispatcher'),
+	(4, 4, 'sq_captain_lim', '$2y$10$FSdC..p9hnwfaD2BHucH9ePn.UNOYX4ezUWMDibk2Amm0omAXGViu', 'pilot'),
+	(5, 5, 'cx_ops_wong', '$2y$10$FQOC7MEAIUWGSrxj66RieuSxVuHuI5hc8vPeylww5e9R6IUjOaaH2', 'operations'),
+	(6, 6, 'thai_crew_manager', '$2y$10$jp3OBqPp3y2oDBH1UFGQieih.BaLtvISXaDvOAkZHHAJR28zLGpV6', 'crew'),
+	(7, 7, 'mh_pilot_ahmad', '$2y$10$FSdC..p9hnwfaD2BHucH9ePn.UNOYX4ezUWMDibk2Amm0omAXGViu', 'pilot'),
+	(8, 8, 'garuda_ops', '$2y$10$FQOC7MEAIUWGSrxj66RieuSxVuHuI5hc8vPeylww5e9R6IUjOaaH2', 'operations'),
+	(9, 9, 'vn_dispatcher', '$2y$10$jp3OBqPp3y2oDBH1UFGQieih.BaLtvISXaDvOAkZHHAJR28zLGpV6', 'dispatcher'),
+	(10, 10, 'cal_manager_chen', '$2y$10$FSdC..p9hnwfaD2BHucH9ePn.UNOYX4ezUWMDibk2Amm0omAXGViu', 'manager');
 
 -- Dumping structure for table amadeus.airports
 CREATE TABLE IF NOT EXISTS `airports` (
@@ -116,16 +100,16 @@ CREATE TABLE IF NOT EXISTS `airports` (
 
 -- Dumping data for table amadeus.airports: ~10 rows (approximately)
 INSERT INTO `airports` (`id`, `iata`, `icao`, `airport_name`, `location_served`, `time`, `dst`) VALUES
-	(1, 'AAA', 'ICA1', 'Alpha Airport', 'City A', 'UTC+1', 'Y'),
-	(2, 'BBB', 'ICA2', 'Bravo Airport', 'City B', 'UTC+2', 'Y'),
-	(3, 'CCC', 'ICA3', 'Charlie Airport', 'City C', 'UTC+3', 'N'),
-	(4, 'DDD', 'ICA4', 'Delta Airport', 'City D', 'UTC+4', 'N'),
-	(5, 'EEE', 'ICA5', 'Echo Airport', 'City E', 'UTC+5', 'Y'),
-	(6, 'FFF', 'ICA6', 'Foxtrot Airport', 'City F', 'UTC+6', 'Y'),
-	(7, 'GGG', 'ICA7', 'Golf Airport', 'City G', 'UTC+7', 'N'),
-	(8, 'HHH', 'ICA8', 'Hotel Airport', 'City H', 'UTC+8', 'N'),
-	(9, 'III', 'ICA9', 'India Airport', 'City I', 'UTC+9', 'Y'),
-	(10, 'JJJ', 'ICA0', 'Juliet Airport', 'City J', 'UTC+10', 'Y');
+	(1, 'MNL', 'RPLL', 'Ninoy Aquino International Airport', 'Manila, Philippines', 'UTC+8', 'UTC+8'),
+	(2, 'CEB', 'RPVM', 'Mactan-Cebu International Airport', 'Cebu, Philippines', 'UTC+8', 'UTC+8'),
+	(3, 'DVO', 'RPMD', 'Francisco Bangoy International Airport', 'Davao, Philippines', 'UTC+8', 'UTC+8'),
+	(4, 'ILO', 'RPVI', 'Iloilo International Airport', 'Iloilo, Philippines', 'UTC+8', 'UTC+8'),
+	(5, 'SIN', 'WSSS', 'Singapore Changi Airport', 'Singapore', 'UTC+8', 'UTC+8'),
+	(6, 'BKK', 'VTBS', 'Suvarnabhumi Airport', 'Bangkok, Thailand', 'UTC+7', 'UTC+7'),
+	(7, 'KUL', 'WMKK', 'Kuala Lumpur International Airport', 'Kuala Lumpur, Malaysia', 'UTC+8', 'UTC+8'),
+	(8, 'CGK', 'WIII', 'Soekarno-Hatta International Airport', 'Jakarta, Indonesia', 'UTC+7', 'UTC+7'),
+	(9, 'HKG', 'VHHH', 'Hong Kong International Airport', 'Hong Kong', 'UTC+8', 'UTC+8'),
+	(10, 'TPE', 'RCTP', 'Taiwan Taoyuan International Airport', 'Taipei, Taiwan', 'UTC+8', 'UTC+8');
 
 -- Dumping structure for table amadeus.flight_routes
 CREATE TABLE IF NOT EXISTS `flight_routes` (
@@ -144,22 +128,20 @@ CREATE TABLE IF NOT EXISTS `flight_routes` (
   CONSTRAINT `FK__airlines` FOREIGN KEY (`airline_id`) REFERENCES `airlines` (`id`) ON DELETE CASCADE,
   CONSTRAINT `FK__airports` FOREIGN KEY (`origin_airport_id`) REFERENCES `airports` (`id`) ON DELETE CASCADE,
   CONSTRAINT `FK__airports_2` FOREIGN KEY (`destination_airport_id`) REFERENCES `airports` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table amadeus.flight_routes: ~12 rows (approximately)
+-- Dumping data for table amadeus.flight_routes: ~10 rows (approximately)
 INSERT INTO `flight_routes` (`id`, `airline_id`, `origin_airport_id`, `destination_airport_id`, `round_trip`, `aircraft_id`) VALUES
 	(1, 1, 1, 2, 1, 1),
-	(2, 1, 2, 3, 1, 2),
-	(3, 1, 3, 4, 1, 3),
-	(4, 2, 4, 5, 1, 4),
-	(5, 2, 5, 6, 1, 5),
-	(6, 2, 6, 7, 1, 6),
-	(10, 4, 10, 1, 1, 10),
-	(11, 4, 1, 2, 1, 1),
-	(12, 4, 2, 3, 1, 2),
-	(13, 10, 9, 10, 1, 9),
-	(14, 10, 10, 1, 1, 10),
-	(15, 10, 1, 2, 1, 1);
+	(2, 1, 1, 3, 1, 2),
+	(3, 2, 2, 4, 1, 1),
+	(4, 2, 1, 5, 0, 4),
+	(5, 3, 1, 6, 1, 1),
+	(6, 4, 5, 1, 0, 5),
+	(7, 5, 9, 1, 1, 3),
+	(8, 6, 6, 2, 0, 2),
+	(9, 7, 7, 1, 1, 4),
+	(10, 8, 8, 5, 1, 6);
 
 -- Dumping structure for table amadeus.flight_schedules
 CREATE TABLE IF NOT EXISTS `flight_schedules` (
@@ -176,34 +158,35 @@ CREATE TABLE IF NOT EXISTS `flight_schedules` (
   KEY `FK_flight_schedules_flight_routes` (`flight_route_id`),
   CONSTRAINT `FK__airline_users` FOREIGN KEY (`airline_user_id`) REFERENCES `airline_users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `FK_flight_schedules_flight_routes` FOREIGN KEY (`flight_route_id`) REFERENCES `flight_routes` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table amadeus.flight_schedules: ~24 rows (approximately)
+-- Dumping data for table amadeus.flight_schedules: ~10 rows (approximately)
 INSERT INTO `flight_schedules` (`id`, `airline_user_id`, `flight_route_id`, `date_departure`, `time_departure`, `date_arrival`, `time_arrival`, `status`) VALUES
-	(45, 1, 1, '2025-09-01', '08:00', '2025-09-01', '10:00', 'Scheduled'),
-	(46, 2, 2, '2025-09-01', '09:00', '2025-09-01', '11:00', 'Scheduled'),
-	(47, 3, 3, '2025-09-01', '10:00', '2025-09-01', '12:00', 'Scheduled'),
-	(48, 4, 4, '2025-09-02', '08:00', '2025-09-02', '10:00', 'Scheduled'),
-	(49, 5, 5, '2025-09-02', '09:00', '2025-09-02', '11:00', 'Scheduled'),
-	(50, 6, 6, '2025-09-02', '10:00', '2025-09-02', '12:00', 'Scheduled'),
-	(54, 10, 10, '2025-09-04', '08:00', '2025-09-04', '10:00', 'Scheduled'),
-	(55, 11, 11, '2025-09-04', '09:00', '2025-09-04', '11:00', 'Scheduled'),
-	(56, 12, 12, '2025-09-04', '10:00', '2025-09-04', '12:00', 'Scheduled'),
-	(57, 13, 13, '2025-09-05', '08:00', '2025-09-05', '10:00', 'Scheduled'),
-	(58, 14, 14, '2025-09-05', '09:00', '2025-09-05', '11:00', 'Scheduled'),
-	(59, 15, 15, '2025-09-05', '10:00', '2025-09-05', '12:00', 'Scheduled'),
-	(60, 1, 1, '2025-09-01', '08:00', '2025-09-01', '10:00', 'Scheduled'),
-	(61, 2, 2, '2025-09-01', '09:00', '2025-09-01', '11:00', 'Scheduled'),
-	(62, 3, 3, '2025-09-01', '10:00', '2025-09-01', '12:00', 'Scheduled'),
-	(63, 4, 4, '2025-09-02', '08:00', '2025-09-02', '10:00', 'Scheduled'),
-	(64, 5, 5, '2025-09-02', '09:00', '2025-09-02', '11:00', 'Scheduled'),
-	(65, 6, 6, '2025-09-02', '10:00', '2025-09-02', '12:00', 'Scheduled'),
-	(69, 10, 10, '2025-09-04', '08:00', '2025-09-04', '10:00', 'Scheduled'),
-	(70, 11, 11, '2025-09-04', '09:00', '2025-09-04', '11:00', 'Scheduled'),
-	(71, 12, 12, '2025-09-04', '10:00', '2025-09-04', '12:00', 'Scheduled'),
-	(72, 13, 13, '2025-09-05', '08:00', '2025-09-05', '10:00', 'Scheduled'),
-	(73, 14, 14, '2025-09-05', '09:00', '2025-09-05', '11:00', 'Scheduled'),
-	(74, 15, 15, '2025-09-05', '10:00', '2025-09-05', '12:00', 'Scheduled');
+	(1, 1, 1, '2025-09-15', '06:30', '2025-09-15', '08:05', 'scheduled'),
+	(2, 1, 2, '2025-09-15', '10:15', '2025-09-15', '12:25', 'on-time'),
+	(3, 2, 3, '2025-09-16', '14:20', '2025-09-16', '15:35', 'scheduled'),
+	(4, 2, 4, '2025-09-16', '16:45', '2025-09-16', '20:15', 'delayed'),
+	(5, 3, 5, '2025-09-17', '07:00', '2025-09-17', '09:30', 'scheduled'),
+	(6, 4, 6, '2025-09-17', '23:55', '2025-09-18', '04:20', 'scheduled'),
+	(7, 5, 7, '2025-09-18', '08:45', '2025-09-18', '12:15', 'on-time'),
+	(8, 6, 8, '2025-09-18', '15:30', '2025-09-18', '20:10', 'scheduled'),
+	(9, 7, 9, '2025-09-19', '11:25', '2025-09-19', '14:55', 'scheduled'),
+	(10, 8, 10, '2025-09-19', '13:40', '2025-09-19', '16:25', 'scheduled');
+
+-- Dumping structure for table amadeus.users
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(250) NOT NULL,
+  `role` enum('user','admin','staff') NOT NULL DEFAULT 'user',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table amadeus.users: ~3 rows (approximately)
+INSERT INTO `users` (`id`, `username`, `password`, `role`) VALUES
+	(5, 'admin', '$2y$10$FSdC..p9hnwfaD2BHucH9ePn.UNOYX4ezUWMDibk2Amm0omAXGViu', 'admin'),
+	(6, 'staff', '$2y$10$FQOC7MEAIUWGSrxj66RieuSxVuHuI5hc8vPeylww5e9R6IUjOaaH2', 'staff'),
+	(7, 'user', '$2y$10$jp3OBqPp3y2oDBH1UFGQieih.BaLtvISXaDvOAkZHHAJR28zLGpV6', 'user');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

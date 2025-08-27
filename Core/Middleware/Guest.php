@@ -5,8 +5,8 @@ class Guest
 {
     public function handle(): void
     {
-        if ($_SESSION['admin'] ?? false) {
-            redirect('/products');
+        if ($_SESSION['user'] ?? false) {
+            redirect('/airlines');
         }
     }
 }
