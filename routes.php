@@ -4,6 +4,7 @@
 $router->get('/airlines', 'airlines/index.php');
 $router->delete('/airlines', 'airlines/destroy.php');
 $router->patch('/airlines', 'airlines/update.php');
+$router->post('/airlines', 'airlines/store.php');
 
 // Airports
 $router->get('/airports', 'airports/index.php');

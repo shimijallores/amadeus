@@ -16,6 +16,7 @@
     "vlucas/phpdotenv": "^5.6",
     "ext-curl": "*",
     "ext-fileinfo": "*",
-    "ext-pdo": "*"
+    "ext-pdo": "*",
+    "phpoffice/phpspreadsheet": "^5.0"
   }
 }
