@@ -45,7 +45,7 @@ require base_path('Http/views/partials/nav.php');
                        class="hidden" accept=".xlsx">
                 <button @click="$refs.storeInput.click()" type="button"
                         class="px-6 py-2 bg-black text-white border border-black hover:scale-105 rounded transition duration-100 cursor-pointer">
-                    Upload
+                    Import
                 </button>
             </form>
         </div>

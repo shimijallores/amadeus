@@ -13,7 +13,7 @@ require base_path('Http/views/partials/nav.php');
         <!-- Filter Component -->
         <div class="max-w-4xl mt-14 mx-auto rounded-lg bg-white h-fit shadow-md rounded min-w-1/4">
             <div class="p-4 w-full bg-black flex gap-x-2 items-center">
-                <p class="text-white">Filter</p>
+                <p class="text-white">Search</p>
                 <svg fill="#ffffff" height="16px" width="16px" version="1.1" id="Capa_1"
                      xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                      viewBox="0 0 488.4 488.4" xml:space="preserve">
@@ -45,7 +45,7 @@ require base_path('Http/views/partials/nav.php');
                            class="hidden" accept=".xlsx">
                     <button @click="$refs.storeInput.click()" type="button"
                             class="px-6 py-2 bg-black text-white border border-black hover:scale-105 rounded transition duration-100 cursor-pointer">
-                        Upload
+                        Import
                     </button>
                 </form>
             </div>
@@ -87,21 +87,20 @@ require base_path('Http/views/partials/nav.php');
                 </table>
             </div>
         </div>
+
+        <script>
+            // Initialize the filter component for aircraft
+            document.addEventListener('DOMContentLoaded', function () {
+                const aircraftFields = [
+                    ["iata", "IATA"],
+                    ["icao", "ICAO"],
+                    ["model", "Model"]
+                ];
+
+                FilterComponent.init('filterContainer', aircraftFields, 'aircraftTable');
+            });
+        </script>
     </main
-
-    <script>
-        // Initialize the filter component for aircraft
-        document.addEventListener('DOMContentLoaded', function () {
-            const aircraftFields = [
-                ["iata", "IATA"],
-                ["icao", "ICAO"],
-                ["model", "Model"]
-            ];
-
-            FilterComponent.init('filterContainer', aircraftFields, 'aircraftTable');
-        });
-    </script>
-
 <?php
 require base_path('Http/views/partials/footer.php');
 ?>
