@@ -10,6 +10,7 @@ $router->post('/airlines', 'airlines/store.php');
 $router->get('/airports', 'airports/index.php');
 $router->delete('/airports', 'airports/destroy.php');
 $router->patch('/airports', 'airports/update.php');
+$router->post('/airports', 'airports/store.php');
 
 // Aircraft
 $router->get('/aircraft', 'aircraft/index.php');
