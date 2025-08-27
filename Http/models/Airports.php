@@ -15,6 +15,19 @@ class Airports
         $this->db = App::resolve(Database::class);
     }
 
+    public function store(array $attributes): void
+    {
+        // Insert into the database
+        $this->db->query("INSERT INTO airports (iata, icao, airport_name, location_served, time, dst) VALUES (:iata, :icao, :airport_name, :location_served, :time, :dst)", [
+            'iata' => $attributes['iata'],
+            'icao' => $attributes['icao'],
+            'airport_name' => $attributes['airport_name'],
+            'location_served' => $attributes['location_served'],
+            'time' => $attributes['time'],
+            'dst' => $attributes['dst'],
+        ]);
+    }
+
     public function update(array $attributes): void
     {
         $this->db->query('UPDATE airports SET iata = :iata, icao = :icao, airport_name = :airport_name, location_served = :location_served, time = :time, dst = :dst WHERE id = :id', [

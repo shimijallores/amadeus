@@ -52,7 +52,7 @@ require base_path('Http/views/partials/nav.php');
 
 
             <!-- Main Table -->
-            <div class="overflow-hidden w-full h-fit overflow-x-auto rounded-sm border border-neutral-300 dark:border-neutral-700">
+            <div class="overflow-y-auto w-full h-fit overflow-x-auto rounded-sm border border-neutral-300 dark:border-neutral-700">
                 <table id="airlinesTable" class="w-full font-medium text-left text-sm text-black dark:text-black">
                     <thead class="border-b border-neutral-300 bg-neutral-50 text-sm text-black dark:border-neutral-700 dark:bg-neutral-900 dark:text-white">
                     <tr>
