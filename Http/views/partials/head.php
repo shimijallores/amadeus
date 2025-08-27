@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amadeus</title>
+    <title>Global Distribution System</title>
     <link rel="icon" type="image/x-icon" href="<?= assets('/images/favicon.svg') ?>">
     <!--Custom CSS -->
     <link href="<?= assets('/dist/style.css') ?>" rel="stylesheet">

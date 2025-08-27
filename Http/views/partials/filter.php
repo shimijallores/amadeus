@@ -1,5 +1,5 @@
 <div class="max-w-4xl <?= !Core\Session::role(['user', 'staff']) ? 'mt-14' : 'mt-4'  ?> mx-auto rounded-lg bg-white h-fit shadow-md rounded min-w-1/4">
-    <div class="p-4 w-full bg-black flex gap-x-2 items-center">
+    <div class="p-4 w-full bg-blue-900 flex gap-x-2 items-center">
         <p class="text-white">Search</p>
         <svg fill="#ffffff" height="16px" width="16px" version="1.1" id="Capa_1"
              xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"

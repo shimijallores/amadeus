@@ -4,11 +4,11 @@ use Core\Session;
 
 ?>
 <nav x-data="{ mobileMenuIsOpen: false }" x-on:click.away="mobileMenuIsOpen = false"
-     class="flex justify-between items-center bg-neutral-50 dark:bg-neutral-900 px-6 py-4 border-neutral-300 dark:border-neutral-700 border-b"
+     class="flex justify-between items-center bg-blue-50 dark:bg-blue-900 px-6 py-4 border-blue-300 dark:border-blue-700 border-b"
      aria-label="penguin ui menu">
     <!-- Brand Logo -->
     <a href="/" class="font-bold text-neutral-900 dark:text-white text-2xl">
-        <span>Amade<span class="text-black dark:text-white">us</span> - Global Distribution System</span>
+        <span>Global Distribution System</span>
         <!-- <img src="./your-logo.svg" alt="brand logo" class="w-10" /> -->
     </a>
     <!-- Desktop Menu -->

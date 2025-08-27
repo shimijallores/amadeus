@@ -22,7 +22,7 @@ const FilterComponent = {
         this.fields.forEach(([fieldId, fieldLabel]) => {
             formHTML += `
                 <div class="grid grid-cols-[20%_50%_20%] gap-4 items-center mb-4">
-                    <p class="text-sm font-bold text-black">${fieldLabel}</p>
+                    <p class="text-sm font-bold text-blue-900">${fieldLabel}</p>
                     <input type="text" 
                            x-model="filters.${fieldId}.value"
                            :disabled="!filters.${fieldId}.active"
@@ -39,11 +39,11 @@ const FilterComponent = {
         formHTML += `
             <div class="text-right mt-4">
                 <button type="button" @click="clearFilters()"
-                    class="px-6 py-2 m-4 bg-white w-30 min-w-30 text-black border border-black hover:scale-105 rounded transition duration-100 cursor-pointer">
+                    class="px-6 py-2 m-4 bg-white w-30 min-w-30 text-blue-900 border border-blue-900 hover:scale-105 rounded transition duration-100 cursor-pointer">
                     Clear
                 </button>
                 <button type="button" @click="applyFilters()"
-                    class="px-6 py-2 transition duration-100 hover:scale-105 min-w-30 bg-black text-white rounded hover:bg-neutral-700 cursor-pointer">
+                    class="px-6 py-2 transition duration-100 hover:scale-105 min-w-30 bg-blue-900 text-white rounded hover:bg-neutral-700 cursor-pointer">
                     Filter
                 </button>
             </div>

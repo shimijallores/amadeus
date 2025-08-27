@@ -11,9 +11,7 @@ require base_path('Http/views/partials/nav.php');
             <div class="flex w-full flex-col justify-center sm:h-screen p-4">
                 <div class="max-w-md w-full mx-auto border border-gray-300 rounded-2xl p-8">
                     <div class="text-center">
-                        <a href="/airlines)">
-                            <img src="<?= assets('/images/logo.svg') ?>" alt="logo" class="w-40 inline-block"/>
-                        </a>
+                        <h1 class="font-bold text-black m-4 text-3xl">Global Distribution System</h1>
                     </div>
 
                     <form method="POST" action="/register">
@@ -55,7 +53,7 @@ require base_path('Http/views/partials/nav.php');
 
                         <div class="mt-8">
                             <button type="submit"
-                                    class="w-full py-3 px-4 text-sm tracking-wider font-medium rounded-md text-white bg-neutral-900 hover:bg-black focus:outline-none cursor-pointer">
+                                    class="w-full py-3 px-4 text-sm tracking-wider font-medium rounded-md text-white bg-blue-900 hover:bg-blue-800 focus:outline-none cursor-pointer">
                                 Create an account
                             </button>
                         </div>
