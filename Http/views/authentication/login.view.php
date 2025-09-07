@@ -3,7 +3,7 @@ require base_path('Http/views/partials/head.php');
 require base_path('Http/views/partials/nav.php');
 ?>
 <main x-data="modalIsOpen=true"
-    class="flex justify-center items-center gap-8 text-black p-8 w-full text-white h-full font-bold">
+    class="flex justify-center items-center gap-8 text-black p-8 w-full h-full font-bold">
     <div x-cloak x-show="modalIsOpen" x-transition.opacity.duration.200ms
         class="fixed inset-0 z-30 flex items-end justify-center bg-black/2 w-full p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8"
         role="dialog" aria-modal="true" aria-labelledby="defaultModalTitle">

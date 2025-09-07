@@ -17,11 +17,10 @@ class AirlineUsers
 
     public function update(array $attributes): void
     {
-        $this->db->query('UPDATE airline_users SET airline_id = :airline_id, user = :user, password = :password, type = :type WHERE id = :id', [
+        $this->db->query('UPDATE airline_users SET airline_id = :airline_id, user = :user, role = :role WHERE id = :id', [
             'airline_id' => $attributes['airline_id'],
             'user' => $attributes['user'],
-            'password' => $attributes['password'],
-            'type' => $attributes['type'],
+            'role' => $attributes['role'],
             'id' => $attributes['id'],
         ]);
 
