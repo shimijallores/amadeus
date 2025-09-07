@@ -11,7 +11,7 @@ require base_path('Http/views/partials/nav.php');
     <?php require base_path('Http/views/flight_schedules/update.view.php') ?>
 
     <!-- Filter Component -->
-    <div class="max-w-4xl mx-auto rounded-lg bg-white h-fit shadow-md rounded min-w-1/4">
+    <div class="max-w-4xl mx-auto rounded-lg bg-white h-fit shadow-md min-w-1/4">
         <div class="p-4 w-full bg-black flex gap-x-2 items-center">
             <p class="text-white">Search</p>
             <svg fill="#ffffff" height="16px" width="16px" version="1.1" id="Capa_1"
