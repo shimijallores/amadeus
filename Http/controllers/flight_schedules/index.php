@@ -9,7 +9,7 @@ $db = App::resolve(Database::class);
 // Join flight_schedules with related tables to get readable names
 $flight_schedules = $db->query("
     SELECT fs.*, 
-           au.user as airline_user_name,
+           au.username as airline_user_name,
            a.airline as airline_name,
            orig.airport_name as origin_airport_name,
            dest.airport_name as destination_airport_name,
@@ -24,7 +24,7 @@ $flight_schedules = $db->query("
 
 // Get all reference data for dropdowns
 $airline_users = $db->query("
-    SELECT au.id, au.user, a.airline 
+    SELECT au.id, au.username, a.airline 
     FROM airline_users au
     LEFT JOIN airlines a ON au.airline_id = a.id
 ")->get();
