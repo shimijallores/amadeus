@@ -120,6 +120,8 @@ require base_path('Http/views/partials/nav.php');
             ["airline_user_name", "Airline User"],
             ["airline_name", "Airline"],
             ["route_display", "Route"],
+            ["departure", "Departure Date"],
+            ["arrival", "Arrival Date"],
             ["status", "Status"]
         ];
 

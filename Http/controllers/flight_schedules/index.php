@@ -7,8 +7,8 @@ use Core\Session;
 $db = App::resolve(Database::class);
 
 // Join flight_schedules with related tables to get readable names
-$flight_schedules = $db->query("
-    SELECT fs.*, 
+$query = "
+ SELECT fs.*, 
            au.username as airline_user_name,
            a.airline as airline_name,
            orig.airport_name as origin_airport_name,
@@ -20,7 +20,14 @@ $flight_schedules = $db->query("
     LEFT JOIN airlines a ON au.airline_id = a.id
     LEFT JOIN airports orig ON fr.origin_airport_id = orig.id
     LEFT JOIN airports dest ON fr.destination_airport_id = dest.id
-")->get();
+";
+
+if (isset($_GET['schedule'])) {
+    $query .= " WHERE fr.id = :id";
+}
+
+$flight_schedules = $db->query($query, isset($_GET['schedule']) ? [':id' => $_GET['schedule']] : [])->get();
+
 
 // Get all reference data for dropdowns
 $airline_users = $db->query("

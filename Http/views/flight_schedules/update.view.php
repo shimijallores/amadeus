@@ -29,7 +29,7 @@
                         <option value="">Select Airline User</option>
                         <?php foreach ($airline_users as $user): ?>
                             <option value="<?= $user['id'] ?>" :selected="editData && editData.airline_user_id == <?= $user['id'] ?>">
-                                <?= htmlspecialchars($user['user'] . ' (' . ($user['airline'] ?? 'No Airline') . ')') ?>
+                                <?= htmlspecialchars($user['username'] . ' (' . ($user['airline'] ?? 'No Airline') . ')') ?>
                             </option>
                         <?php endforeach; ?>
                     </select>

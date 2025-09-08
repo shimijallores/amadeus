@@ -7,7 +7,7 @@ use Core\Session;
 $db = App::resolve(Database::class);
 
 // Join flight_routes with related tables to get names
-$flight_routes = $db->query("
+$query = "
     SELECT fr.*, 
            a.airline as airline_name,
            orig.airport_name as origin_airport_name,
@@ -18,7 +18,13 @@ $flight_routes = $db->query("
     LEFT JOIN airports orig ON fr.origin_airport_id = orig.id
     LEFT JOIN airports dest ON fr.destination_airport_id = dest.id
     LEFT JOIN aircraft ac ON fr.aircraft_id = ac.id
-")->get();
+";
+
+if (isset($_GET['airline'])) {
+    $query .= " WHERE a.id = :id";
+}
+
+$flight_routes = $db->query($query, isset($_GET['airline']) ? [':id' => $_GET['airline']] : [])->get();
 
 // Get all reference data for dropdowns
 $airlines = $db->query("SELECT id, airline FROM airlines")->get();
