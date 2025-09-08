@@ -117,7 +117,6 @@ require base_path('Http/views/partials/nav.php');
     // Initialize the filter component for flight schedules
     document.addEventListener('DOMContentLoaded', function() {
         const flightSchedulesFields = [
-            ["airline_user_name", "Airline User"],
             ["airline_name", "Airline"],
             ["route_display", "Route"],
             ["departure", "Departure Date"],
@@ -125,7 +124,7 @@ require base_path('Http/views/partials/nav.php');
             ["status", "Status"]
         ];
 
-        FilterComponent.init('filterContainer', flightSchedulesFields, 'flightSchedulesTable');
+        FilterComponent.init('filterContainer', flightSchedulesFields, 'flightSchedulesTable', <?= json_encode($selectedRoute['airline'] ?? '') ?>);
     });
 </script>
 

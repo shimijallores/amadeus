@@ -96,7 +96,7 @@ require base_path('Http/views/partials/nav.php');
             ["aircraft_model", "Aircraft"]
         ];
 
-        FilterComponent.init('filterContainer', flightRoutesFields, 'flightRoutesTable');
+        FilterComponent.init('filterContainer', flightRoutesFields, 'flightRoutesTable', <?= json_encode($selectedAirline['airline'] ?? '') ?>);
     });
 </script>
 

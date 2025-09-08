@@ -20,11 +20,15 @@ $query = "
     LEFT JOIN aircraft ac ON fr.aircraft_id = ac.id
 ";
 
+$selectedAirline = false;
+
 if (isset($_GET['airline'])) {
     $query .= " WHERE a.id = :id";
+    $selectedAirline = $db->query("SELECT * FROM airlines WHERE id = :id", [':id' => $_GET['airline']])->find();
 }
 
 $flight_routes = $db->query($query, isset($_GET['airline']) ? [':id' => $_GET['airline']] : [])->get();
+
 
 // Get all reference data for dropdowns
 $airlines = $db->query("SELECT id, airline FROM airlines")->get();

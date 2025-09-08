@@ -1,26 +1,30 @@
 // Dynamic Filter Component using Alpine.js
 const FilterComponent = {
-    init(containerId, fields, tableId) {
-        this.containerId = containerId;
-        this.fields = fields;
-        this.tableId = tableId;
-        this.generateFilterForm();
-    },
+  init(containerId, fields, tableId, param = "") {
+    this.containerId = containerId;
+    this.fields = fields;
+    this.tableId = tableId;
+    this.param = param;
+    this.generateFilterForm();
+  },
 
-    generateFilterForm() {
-        const container = document.getElementById(this.containerId);
-        if (!container) return;
+  generateFilterForm() {
+    const container = document.getElementById(this.containerId);
+    if (!container) return;
 
-        // Initialize filters data
-        const filtersData = {};
-        this.fields.forEach(([fieldId]) => {
-            filtersData[fieldId] = { active: false, value: '' };
-        });
+    // Initialize filters data
+    const filtersData = {};
+    this.fields.forEach(([fieldId], index) => {
+      filtersData[fieldId] = {
+        active: false,
+        value: index === 0 ? this.param : "",
+      };
+    });
 
-        let formHTML = '<div x-data="filterData()">';
+    let formHTML = '<div x-data="filterData()">';
 
-        this.fields.forEach(([fieldId, fieldLabel]) => {
-            formHTML += `
+    this.fields.forEach(([fieldId, fieldLabel]) => {
+      formHTML += `
                 <div class="grid grid-cols-[20%_50%_20%] gap-4 items-center mb-4">
                     <p class="text-sm font-bold text-black">${fieldLabel}</p>
                     <input type="text" 
@@ -34,9 +38,9 @@ const FilterComponent = {
                            data-field="${fieldId}">
                 </div>
             `;
-        });
+    });
 
-        formHTML += `
+    formHTML += `
             <div class="text-right mt-4">
                 <button type="button" @click="clearFilters()"
                     class="px-6 py-2 m-4 bg-white w-30 min-w-30 text-black border border-black hover:scale-105 rounded transition duration-100 cursor-pointer">
@@ -49,46 +53,48 @@ const FilterComponent = {
             </div>
         </div>`;
 
-        container.innerHTML = formHTML;
+    container.innerHTML = formHTML;
 
-        // Define Alpine.js component globally
-        window.filterData = () => {
-            const tableId = this.tableId;
-            return {
-                filters: filtersData,
+    // Define Alpine.js component globally
+    window.filterData = () => {
+      const tableId = this.tableId;
+      return {
+        filters: filtersData,
 
-                clearFilters() {
-                    Object.keys(this.filters).forEach(fieldId => {
-                        this.filters[fieldId] = { active: false, value: '' };
-                    });
-                    this.applyFilters();
-                },
+        clearFilters() {
+          Object.keys(this.filters).forEach((fieldId) => {
+            this.filters[fieldId] = { active: false, value: "" };
+          });
+          this.applyFilters();
+        },
 
-                applyFilters() {
-                    const table = document.getElementById(tableId);
-                    if (!table) return;
+        applyFilters() {
+          const table = document.getElementById(tableId);
+          if (!table) return;
 
-                    const rows = table.querySelectorAll('tbody tr');
+          const rows = table.querySelectorAll("tbody tr");
 
-                    rows.forEach(row => {
-                        let showRow = true;
+          rows.forEach((row) => {
+            let showRow = true;
 
-                        Object.entries(this.filters).forEach(([fieldId, filter]) => {
-                            if (filter.active && filter.value) {
-                                const cellSelector = 'td[data-field="' + fieldId + '"]';
-                                const cellValue = row.querySelector(cellSelector)?.textContent?.toLowerCase() || '';
-                                const filterValue = filter.value.toLowerCase();
+            Object.entries(this.filters).forEach(([fieldId, filter]) => {
+              if (filter.active && filter.value) {
+                const cellSelector = 'td[data-field="' + fieldId + '"]';
+                const cellValue =
+                  row.querySelector(cellSelector)?.textContent?.toLowerCase() ||
+                  "";
+                const filterValue = filter.value.toLowerCase();
 
-                                if (!cellValue.includes(filterValue)) {
-                                    showRow = false;
-                                }
-                            }
-                        });
-
-                        row.style.display = showRow ? '' : 'none';
-                    });
+                if (!cellValue.includes(filterValue)) {
+                  showRow = false;
                 }
-            }
-        };
-    }
+              }
+            });
+
+            row.style.display = showRow ? "" : "none";
+          });
+        },
+      };
+    };
+  },
 };

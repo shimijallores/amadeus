@@ -22,8 +22,11 @@ $query = "
     LEFT JOIN airports dest ON fr.destination_airport_id = dest.id
 ";
 
+$selectedRoute = false;
+
 if (isset($_GET['schedule'])) {
     $query .= " WHERE fr.id = :id";
+    $selectedRoute = $db->query("SELECT a.airline FROM airlines a LEFT JOIN flight_routes fr on fr.airline_id = a.id  WHERE fr.id = :id", [':id' => $_GET['schedule']])->find();
 }
 
 $flight_schedules = $db->query($query, isset($_GET['schedule']) ? [':id' => $_GET['schedule']] : [])->get();
