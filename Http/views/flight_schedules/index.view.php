@@ -2,13 +2,16 @@
 require base_path('Http/views/partials/head.php');
 require base_path('Http/views/partials/nav.php');
 ?>
-<main x-data="{showDeleteModal: false, deleteId: null, showUpdateModal: false, editData: null}"
+<main x-data="{showDeleteModal: false, deleteId: null, showUpdateModal: false, editData: null, showSeatsModal: false, scheduleData: []}"
     class="h-full w-full flex justify-center gap-x-10 font-bold p-8">
     <!-- Delete Modal -->
     <?php require base_path('Http/views/flight_schedules/destroy.view.php') ?>
 
     <!-- Update Modal -->
     <?php require base_path('Http/views/flight_schedules/update.view.php') ?>
+
+    <!-- Seats Modal -->
+    <?php require base_path('Http/views/flight_schedules/seats.php') ?>
 
     <!-- Filter Component -->
     <div class="max-w-4xl mx-auto rounded-lg bg-white h-fit shadow-md min-w-1/4">
@@ -59,7 +62,7 @@ require base_path('Http/views/partials/nav.php');
                         <td class="p-4"
                             data-field="airline_user_name"><?= $schedule['airline_user_name'] ?? 'N/A' ?></td>
                         <td class="p-4" data-field="airline_name"><?= $schedule['airline_name'] ?? 'N/A' ?></td>
-                        <td class="p-4" data-field="route_display"><?= $schedule['route_display'] ?? 'N/A' ?></td>
+                        <td class="p-4 text-wrap w-12" data-field="route_display"><?= $schedule['route_display'] ?? 'N/A' ?></td>
                         <td class="p-4"
                             data-field="departure"><?= ($schedule['date_departure'] ?? 'N/A') . ' ' . ($schedule['time_departure'] ?? '') ?></td>
                         <td class="p-4"
@@ -101,8 +104,12 @@ require base_path('Http/views/partials/nav.php');
                                     Edit
                                 </button>
                                 <button @click="showDeleteModal=true; deleteId = <?= $schedule['id'] ?>" type="button"
-                                    class="px-6 py-2 transition duration-100 hover:scale-105 min-w-10 bg-black text-white rounded hover:bg-neutral-700 cursor-pointer">
+                                    class="px-6 py-2 transition duration-100 hover:scale-105 min-w-10 bg-red-800 text-white rounded hover:bg-neutral-700 cursor-pointer">
                                     Delete
+                                </button>
+                                <button @click="showSeatsModal=true; scheduleData = <?= htmlspecialchars(json_encode($schedule['seats'])) ?>; console.log(scheduleData)" type="button"
+                                    class="px-6 ml-4 py-2 transition duration-100 hover:scale-105 min-w-10 bg-black text-white rounded hover:bg-neutral-700 cursor-pointer">
+                                    Seats
                                 </button>
                             </td>
                         <?php endif; ?>
