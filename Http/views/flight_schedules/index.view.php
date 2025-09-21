@@ -2,7 +2,7 @@
 require base_path('Http/views/partials/head.php');
 require base_path('Http/views/partials/nav.php');
 ?>
-<main x-data="{showDeleteModal: false, deleteId: null, showUpdateModal: false, editData: null, showSeatsModal: true, scheduleData: []}"
+<main x-data="{showDeleteModal: false, deleteId: null, showUpdateModal: false, editData: null, showSeatsModal: false, scheduleData: []}"
     class="h-full w-full flex justify-center gap-x-10 font-bold p-8">
     <!-- Delete Modal -->
     <?php require base_path('Http/views/flight_schedules/destroy.view.php') ?>
