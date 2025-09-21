@@ -32,8 +32,8 @@
                 </thead>
                 <tbody class="divide-y text-white divide-neutral-300 dark:divide-neutral-700 overflow-y-auto">
                     <template x-for="seat in scheduleData" :key="seat.seat_id">
-                        <tr>
-                            <td x-text="seat.seat_id"></td>
+                        <tr class="m-2 text-center">
+                            <td x-text="seat.seat_id" class="p-2"></td>
                             <td x-text="seat.flight_schedule_id"></td>
                             <td x-text="seat.ticket_id"></td>
                             <td x-text="seat.seat_no"></td>
