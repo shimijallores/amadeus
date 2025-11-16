@@ -15,6 +15,8 @@ $query = "
            s.flight_schedule_id,
            s.ticket_id,
            s.seat_no,
+           s.row,
+           s.column,
            s.class,
            s.status as seat_status,
            orig.airport_name as origin_airport_name,
@@ -77,9 +79,11 @@ foreach ($rows as $row) {
     if (!empty($row['seat_id'])) {
         $schedules[$fs_id]['seats'][] = [
             'seat_id' => $row['seat_id'],
-            'seat_no' => $row['seat_no'],
-            'ticket_id' => $row['ticket_id'],
             'flight_schedule_id' => $row['flight_schedule_id'],
+            'ticket_id' => $row['ticket_id'],
+            'seat_no' => $row['seat_no'],
+            'row' => $row['row'],
+            'column' => $row['column'],
             'class' => $row['class'],
             'seat_status' => $row['seat_status']
         ];

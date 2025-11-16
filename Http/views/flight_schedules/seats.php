@@ -43,8 +43,8 @@
                             <td x-text="seat.flight_schedule_id"></td>
                             <td x-text="seat.ticket_id"></td>
                             <td x-text="seat.seat_no"></td>
-                            <td></td>
-                            <td></td>
+                            <td x-text="seat.row"></td>
+                            <td x-text="seat.column"></td>
                             <td x-text="seat.class"></td>
                             <td x-text="seat.seat_status"></td>
                         </tr>
