@@ -24,6 +24,9 @@ $query = "
            fs.date_departure,
            fs.date_arrival,
            fs.status,
+           craft.model,
+           craft.rows,
+           craft.columns,
            CONCAT(orig.airport_name, ' → ', dest.airport_name) as route_display
     FROM flight_schedules fs
     LEFT JOIN airline_users au ON fs.airline_user_id = au.id
@@ -32,6 +35,7 @@ $query = "
     LEFT JOIN airports orig ON fr.origin_airport_id = orig.id
     LEFT JOIN airports dest ON fr.destination_airport_id = dest.id
     LEFT JOIN seats s ON s.flight_schedule_id = fs.id
+    LEFT JOIN aircraft craft ON craft.id = fs.aircraft_id
 ";
 
 $params = [];
@@ -81,9 +85,12 @@ foreach ($rows as $row) {
             'seat_id' => $row['seat_id'],
             'flight_schedule_id' => $row['flight_schedule_id'],
             'ticket_id' => $row['ticket_id'],
+            'model' => $row['model'],
             'seat_no' => $row['seat_no'],
             'row' => $row['row'],
             'column' => $row['column'],
+            'rows' => $row['rows'],
+            'columns' => $row['columns'],
             'class' => $row['class'],
             'seat_status' => $row['seat_status']
         ];

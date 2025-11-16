@@ -19,7 +19,7 @@
         </div>
         <!-- Dialog Body -->
         <div class="px-4 flex flex-col justify-end">
-            <button @click="console.log(scheduleData)"
+            <button @click="showVisualModal = true"
                 class="whitespace-nowrap self-end rounded-sm bg-black border border-black dark:border-white px-4 py-2 text-center text-sm font-medium tracking-wide text-neutral-100 transition hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:opacity-100 active:outline-offset-0 dark:bg-white dark:text-black dark:focus-visible:outline-white">
                 Visualize
             </button>
