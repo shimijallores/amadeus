@@ -1,6 +1,7 @@
 <?php
 
 // Airlines
+$router->get('/', 'airlines/index.php')->only('admin');
 $router->get('/airlines', 'airlines/index.php')->only('admin');
 $router->delete('/airlines', 'airlines/destroy.php')->only('admin');
 $router->patch('/airlines', 'airlines/update.php')->only('admin');
