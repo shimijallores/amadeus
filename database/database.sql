@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `aircraft` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table amadeus.aircraft: ~10 rows (approximately)
+-- Dumping data for table amadeus.aircraft: ~7 rows (approximately)
 INSERT INTO `aircraft` (`id`, `iata`, `icao`, `model`, `seats_f`, `seats_c`, `seats_y`, `rows`, `columns`) VALUES
 	(1, '320', 'A320', 'Airbus A320-200', 10, 20, 80, 19, 6),
 	(2, '737', 'B737', 'Boeing 737-800', 10, 20, 80, 19, 6),
@@ -183,7 +183,7 @@ CREATE TABLE IF NOT EXISTS `flight_schedules` (
   CONSTRAINT `FK_flight_schedules_user` FOREIGN KEY (`airline_user_id`) REFERENCES `airline_users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table amadeus.flight_schedules: ~40 rows (approximately)
+-- Dumping data for table amadeus.flight_schedules: ~0 rows (approximately)
 INSERT INTO `flight_schedules` (`id`, `airline_user_id`, `flight_route_id`, `aircraft_id`, `date_departure`, `time_departure`, `date_arrival`, `time_arrival`, `status`, `price_f`, `price_c`, `price_y`) VALUES
 	(1, 1, 1, 1, '2025-10-01', '08:00', '2025-10-01', '16:00', 'scheduled', 1200.00, 800.00, 300.00),
 	(2, 1, 1, 1, '2025-10-02', '20:00', '2025-10-03', '04:00', 'scheduled', 1250.00, 820.00, 320.00),
@@ -235,7 +235,7 @@ CREATE TABLE IF NOT EXISTS `passengers` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table amadeus.passengers: ~3 rows (approximately)
+-- Dumping data for table amadeus.passengers: ~0 rows (approximately)
 INSERT INTO `passengers` (`id`, `name`, `email`, `phone`) VALUES
 	(1, 'Shimi Uzziel Jallores', 'shimijallores35@gmail.com', '09561434976'),
 	(4, 'Estephanie Anne De Torres', 'estephanieanne35@gmail.com', '09561434976'),
@@ -259,7 +259,7 @@ CREATE TABLE IF NOT EXISTS `seats` (
   CONSTRAINT `FK_seats_schedule` FOREIGN KEY (`flight_schedule_id`) REFERENCES `flight_schedules` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=441 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table amadeus.seats: ~440 rows (approximately)
+-- Dumping data for table amadeus.seats: ~0 rows (approximately)
 INSERT INTO `seats` (`id`, `flight_schedule_id`, `aircraft_id`, `ticket_id`, `seat_no`, `row`, `column`, `class`, `status`) VALUES
 	(1, 1, 1, NULL, 'F1', 1, 1, 'F', 'occupied'),
 	(2, 1, 1, NULL, 'F2', 1, 6, 'F', 'available'),
@@ -373,7 +373,7 @@ INSERT INTO `seats` (`id`, `flight_schedule_id`, `aircraft_id`, `ticket_id`, `se
 	(110, 1, 1, NULL, 'Y80', 24, 2, 'Y', 'available'),
 	(111, 2, 1, NULL, 'F1', 1, 1, 'F', 'available'),
 	(112, 2, 1, NULL, 'F2', 1, 6, 'F', 'available'),
-	(113, 2, 1, NULL, 'F3', 2, 1, 'F', 'available'),
+	(113, 2, 1, NULL, 'F3', 2, 1, 'F', 'occupied'),
 	(114, 2, 1, NULL, 'F4', 2, 6, 'F', 'available'),
 	(115, 2, 1, NULL, 'F5', 3, 1, 'F', 'available'),
 	(116, 2, 1, NULL, 'F6', 3, 6, 'F', 'available'),
