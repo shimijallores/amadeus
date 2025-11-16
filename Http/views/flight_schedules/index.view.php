@@ -107,7 +107,7 @@ require base_path('Http/views/partials/nav.php');
                                     class="px-6 py-2 transition duration-100 hover:scale-105 min-w-10 bg-red-800 text-white rounded hover:bg-neutral-700 cursor-pointer">
                                     Delete
                                 </button>
-                                <button @click="showSeatsModal=true; scheduleData = <?= htmlspecialchars(json_encode($schedule['seats'])) ?>; console.log(scheduleData)" type="button"
+                                <button @click="showSeatsModal=true; scheduleData = <?= htmlspecialchars(json_encode($schedule['seats'])) ?>" type="button"
                                     class="px-6 ml-4 py-2 transition duration-100 hover:scale-105 min-w-10 bg-black text-white rounded hover:bg-neutral-700 cursor-pointer">
                                     Seats
                                 </button>

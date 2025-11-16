@@ -266,9 +266,6 @@
   .mx-auto {
     margin-inline: auto;
   }
-  .my-1 {
-    margin-block: calc(var(--spacing) * 1);
-  }
   .mt-1 {
     margin-top: calc(var(--spacing) * 1);
   }
@@ -498,6 +495,9 @@
     :where(& > :not(:last-child)) {
       border-color: var(--color-neutral-300);
     }
+  }
+  .self-end {
+    align-self: flex-end;
   }
   .overflow-auto {
     overflow: auto;
