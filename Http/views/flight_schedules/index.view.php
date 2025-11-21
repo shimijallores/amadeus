@@ -2,7 +2,65 @@
 require base_path('Http/views/partials/head.php');
 require base_path('Http/views/partials/nav.php');
 ?>
-<main x-data="{showDeleteModal: false, deleteId: null, showUpdateModal: false, editData: null, showSeatsModal: false, showVisualModal: false, scheduleData: []}"
+<main x-data="{
+    showDeleteModal: false, 
+    deleteId: null, 
+    showUpdateModal: false, 
+    editData: null, 
+    showSeatsModal: false, 
+    showVisualModal: false, 
+    scheduleData: [],
+    getSeatNumber(row, col) {
+        const columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'];
+        return row + columns[col - 1];
+    },
+    getSeatStatus(row, col) {
+        if (!this.scheduleData || this.scheduleData.length === 0) return 'available';
+        const seatNumber = this.getSeatNumber(row, col);
+        const seat = this.scheduleData.find(s => s.seat_no === seatNumber);
+        return seat ? seat.seat_status : 'available';
+    },
+    getSeatDetails(row, col) {
+        if (!this.scheduleData || this.scheduleData.length === 0) return 'No details available';
+        const seatNumber = this.getSeatNumber(row, col);
+        const seat = this.scheduleData.find(s => s.seat_no === seatNumber);
+        
+        if (!seat) return 'Seat: ' + seatNumber + '\nStatus: available';
+        
+        const className = seat.class === 'F' ? 'First Class' : seat.class === 'C' ? 'Business Class' : 'Economy Class';
+        let details = `Seat: ${seat.seat_no}\n`;
+        details += `Ticket ID: ${seat.ticket_id || 'N/A'}\n`;
+        details += `Customer: ${seat.customer_name || 'N/A'}\n`;
+        details += `Class: ${className}\n`;
+        details += `Status: ${seat.seat_status}`;
+        
+        return details;
+    },
+    getSeatClass(row, col) {
+        if (!this.scheduleData || this.scheduleData.length === 0) return 'Y';
+        const seatNumber = this.getSeatNumber(row, col);
+        const seat = this.scheduleData.find(s => s.seat_no === seatNumber);
+        return seat ? seat.class : 'Y';
+    },
+    shouldShowSeparator(rowIndex) {
+        if (!this.scheduleData || this.scheduleData.length === 0) return false;
+        const currentRow = rowIndex + 1;
+        const nextRow = currentRow + 1;
+        
+        // Get the class of the first seat in current row and next row
+        const currentClass = this.getSeatClass(currentRow, 1);
+        const nextClass = this.getSeatClass(nextRow, 1);
+        
+        return currentClass !== nextClass;
+    },
+    getClassLabel(rowIndex) {
+        const row = rowIndex + 1;
+        const seatClass = this.getSeatClass(row, 1);
+        if (seatClass === 'F') return 'First Class';
+        if (seatClass === 'C') return 'Business Class';
+        return 'Economy Class';
+    }
+}"
     class="h-full w-full flex justify-center gap-x-10 font-bold p-8">
     <!-- Delete Modal -->
     <?php require base_path('Http/views/flight_schedules/destroy.view.php') ?>
@@ -122,7 +180,7 @@ require base_path('Http/views/partials/nav.php');
                                     class="px-6 py-2 m-2 bg-neutral-900 min-w-10 text-white border border-black hover:scale-105 rounded transition duration-100 cursor-pointer">
                                     Seats
                                 </button>
-                                <button @click="alert('feature to be implemented')" type="button"
+                                <button @click="showVisualModal=true; scheduleData=<?= htmlspecialchars(json_encode($schedule['seats'])) ?>; console.log(scheduleData);" type="button"
                                     class="px-6 py-2 m-2 bg-green-700 min-w-10 text-white border border-green-700 hover:scale-105 rounded transition duration-100 cursor-pointer">
                                     Visualize
                                 </button>

@@ -17,23 +17,72 @@
                 </svg>
             </button>
         </div>
-        <!-- Dialog Body -->
+
+        <!-- Seat Visualization -->
         <div class="px-4 flex flex-col justify-end">
-            <div class="grid gap-1" :style="`grid-template-rows: repeat(${scheduleData[0]?.rows || 1}, 1fr); grid-template-columns: repeat(${scheduleData[0]?.columns || 1}, 1fr);`">
-                <template x-for="seat in scheduleData" :key="seat.seat_id">
-                    <div
-                        class="flex items-center justify-center p-2 text-xs font-bold rounded"
-                        :style="`grid-row: ${seat.row}; grid-column: ${seat.column};`"
-                        :class="{
-                            'bg-green-500 text-white': seat.seat_status === 'available',
-                            'bg-red-500 text-white': seat.seat_status === 'occupied',
-                            'bg-gray-500 text-white': seat.seat_status === 'blocked'
-                        }"
-                        :title="`ID: ${seat.seat_id}, FID: ${seat.flight_schedule_id}, Ticket: ${seat.ticket_id}, Seat: ${seat.seat_no}, Row: ${seat.row}, Col: ${seat.column}, Class: ${seat.class}, Status: ${seat.seat_status}`"
-                        x-text="seat.seat_no + ' (' + seat.seat_id + ')'"></div>
-                </template>
-            </div>
+            <template x-if="scheduleData.length > 0 && scheduleData[0]?.layout">
+                <div class="flex flex-col items-center gap-2 py-4">
+                    <!-- Aircraft Legend -->
+                    <div class="flex gap-4 mb-4 text-sm">
+                        <div class="flex items-center gap-2">
+                            <div class="w-4 h-4 border-2 border-green-400 rounded"></div>
+                            <span>Available</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-4 h-4 border-2 border-red-400 rounded"></div>
+                            <span>Occupied</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-4 h-4 border-2 border-gray-500 rounded"></div>
+                            <span>Blocked</span>
+                        </div>
+                    </div>
+
+                    <!-- Seat Map -->
+                    <div class="flex flex-col gap-1">
+                        <template x-for="(row, rowIndex) in scheduleData[0].layout.split(' ')" :key="rowIndex">
+                            <div>
+                                <!-- Class Label -->
+                                <div x-show="rowIndex === 0 || shouldShowSeparator(rowIndex - 1)"
+                                    class="text-xs font-bold mb-2 text-center py-2 px-4 bg-neutral-100 dark:bg-neutral-800 rounded"
+                                    x-text="getClassLabel(rowIndex)">
+                                </div>
+
+                                <div class="flex gap-1 items-center">
+                                    <!-- Row Number -->
+                                    <div class="w-8 text-xs text-center font-semibold text-neutral-500" x-text="rowIndex + 1"></div>
+
+                                    <!-- Seats in Row -->
+                                    <template x-for="(col, colIndex) in row.split('')" :key="colIndex">
+                                        <div>
+                                            <div x-show="col === '1'"
+                                                class="w-10 h-10 flex items-center justify-center text-xs font-semibold rounded border-2 cursor-pointer transition hover:scale-110 duration-300"
+                                                :class="{
+                                                    'border-green-400': getSeatStatus(rowIndex + 1, colIndex + 1) === 'available',
+                                                    'border-red-400': getSeatStatus(rowIndex + 1, colIndex + 1) === 'occupied',
+                                                    'border-gray-500': getSeatStatus(rowIndex + 1, colIndex + 1) === 'blocked'
+                                                }"
+                                                x-text="getSeatNumber(rowIndex + 1, colIndex + 1)"
+                                                :title="getSeatDetails(rowIndex + 1, colIndex + 1)">
+                                            </div>
+                                            <div x-show="col === '0'" class="w-10 h-10 flex items-center justify-center text-neutral-400 text-xs">
+
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <!-- Class Separator (show after last row of each class) -->
+                                <div x-show="shouldShowSeparator(rowIndex)"
+                                    class="h-px bg-neutral-300 dark:bg-neutral-600 my-2">
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </template>
         </div>
+
         <!-- Dialog Footer -->
         <div class="flex flex-col-reverse justify-between gap-2 border-t border-neutral-300 bg-neutral-50/60 p-4 dark:border-neutral-700 dark:bg-neutral-950/20 sm:flex-row sm:items-center md:justify-end">
             <button x-on:click="showVisualModal = false"

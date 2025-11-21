@@ -25,14 +25,14 @@ CREATE TABLE IF NOT EXISTS `aircraft` (
   `seats_y` int NOT NULL DEFAULT '0',
   `rows` int DEFAULT NULL,
   `columns` int DEFAULT NULL,
-  `layout` varchar(50) DEFAULT NULL,
+  `layout` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table amadeus.aircraft: ~5 rows (approximately)
+-- Dumping data for table amadeus.aircraft: ~0 rows (approximately)
 INSERT INTO `aircraft` (`id`, `iata`, `icao`, `model`, `seats_f`, `seats_c`, `seats_y`, `rows`, `columns`, `layout`) VALUES
-	(1, 'E90', 'E190', 'Embraer E190 Custom', 3, 6, 27, 12, 4, '1011'),
-	(2, 'CRJ', 'CRJ9', 'Bombardier CRJ-900', 8, 8, 24, 10, 5, '11011'),
+	(1, 'E90', 'E190', 'Embraer E190 Custom', 3, 6, 27, 12, 4, '1011 1011 1011 1011 1011 1011 1011 1011 1011 1011 1011 1011'),
+	(2, 'CRJ', 'CRJ9', 'Bombardier CRJ-900', 8, 8, 24, 10, 5, '11011 11011 11011 11011 11011 11011 11011 11011 11011 11011'),
 	(3, 'AT7', 'AT72', 'ATR 72-600', 0, 0, 48, 12, 5, '11011'),
 	(4, 'E35', 'E135', 'Embraer Legacy 600', 20, 0, 0, 10, 3, '101'),
 	(5, 'ER4', 'E145', 'Embraer ERJ-145', 0, 6, 39, 15, 4, '1011');
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `airlines` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table amadeus.airlines: ~5 rows (approximately)
+-- Dumping data for table amadeus.airlines: ~0 rows (approximately)
 INSERT INTO `airlines` (`id`, `iata`, `icao`, `airline`, `callsign`, `country`, `comments`) VALUES
 	(1, 'DLA', 'DALS', 'Delta Air Lines', 'DELTA', 'USA', 'SkyTeam Alliance'),
 	(2, 'LHA', 'DLHA', 'Lufthansa', 'LUFTHANSA', 'Germany', 'Star Alliance'),
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `airline_users` (
   CONSTRAINT `FK_airline` FOREIGN KEY (`airline_id`) REFERENCES `airlines` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table amadeus.airline_users: ~5 rows (approximately)
+-- Dumping data for table amadeus.airline_users: ~0 rows (approximately)
 INSERT INTO `airline_users` (`id`, `airline_id`, `username`, `password`, `role`) VALUES
 	(1, 1, 'delta_mgr', 'pass123', 'manager'),
 	(2, 2, 'lufthansa_ops', 'pass123', 'manager'),
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `airports` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table amadeus.airports: ~5 rows (approximately)
+-- Dumping data for table amadeus.airports: ~0 rows (approximately)
 INSERT INTO `airports` (`id`, `iata`, `icao`, `airport_name`, `location_served`, `time`, `dst`) VALUES
 	(1, 'JFK', 'KJFK', 'John F. Kennedy', 'New York, USA', 'UTC-5', 'Yes'),
 	(2, 'LHR', 'EGLL', 'Heathrow', 'London, UK', 'UTC+0', 'Yes'),
@@ -116,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `flight_routes` (
   CONSTRAINT `FK_flight_routes_origin` FOREIGN KEY (`origin_airport_id`) REFERENCES `airports` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table amadeus.flight_routes: ~10 rows (approximately)
+-- Dumping data for table amadeus.flight_routes: ~0 rows (approximately)
 INSERT INTO `flight_routes` (`id`, `airline_id`, `origin_airport_id`, `destination_airport_id`, `round_trip`, `aircraft_id`) VALUES
 	(1, 1, 1, 2, 1, 1),
 	(2, 1, 2, 1, 1, 1),
@@ -189,6 +189,9 @@ CREATE TABLE IF NOT EXISTS `seats` (
   `seat_no` varchar(10) NOT NULL,
   `class` enum('F','C','Y') NOT NULL,
   `status` enum('available','occupied','blocked') NOT NULL DEFAULT 'available',
+  `customer_name` varchar(250) DEFAULT NULL,
+  `customer_number` int DEFAULT NULL,
+  `agency_number` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_seats_schedule` (`flight_schedule_id`),
   KEY `FK_seats_aircraft` (`aircraft_id`),
@@ -196,84 +199,84 @@ CREATE TABLE IF NOT EXISTS `seats` (
   CONSTRAINT `FK_seats_schedule` FOREIGN KEY (`flight_schedule_id`) REFERENCES `flight_schedules` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table amadeus.seats: ~76 rows (approximately)
-INSERT INTO `seats` (`id`, `flight_schedule_id`, `aircraft_id`, `ticket_id`, `seat_no`, `class`, `status`) VALUES
-	(1, 1, 1, 'TKT-100', '1A', 'F', 'occupied'),
-	(2, 1, 1, NULL, '1B', 'F', 'available'),
-	(3, 1, 1, NULL, '1C', 'F', 'available'),
-	(4, 1, 1, 'TKT-101', '2A', 'C', 'occupied'),
-	(5, 1, 1, 'TKT-102', '2B', 'C', 'occupied'),
-	(6, 1, 1, NULL, '2C', 'C', 'available'),
-	(7, 1, 1, NULL, '3A', 'C', 'available'),
-	(8, 1, 1, NULL, '3B', 'C', 'available'),
-	(9, 1, 1, NULL, '3C', 'C', 'available'),
-	(10, 1, 1, 'TKT-103', '4A', 'Y', 'occupied'),
-	(11, 1, 1, 'TKT-104', '4B', 'Y', 'occupied'),
-	(12, 1, 1, 'TKT-105', '4C', 'Y', 'occupied'),
-	(13, 1, 1, NULL, '5A', 'Y', 'available'),
-	(14, 1, 1, NULL, '5B', 'Y', 'available'),
-	(15, 1, 1, NULL, '5C', 'Y', 'available'),
-	(16, 1, 1, NULL, '6A', 'Y', 'blocked'),
-	(17, 1, 1, NULL, '6B', 'Y', 'blocked'),
-	(18, 1, 1, NULL, '6C', 'Y', 'blocked'),
-	(19, 1, 1, NULL, '7A', 'Y', 'available'),
-	(20, 1, 1, 'TKT-106', '7B', 'Y', 'occupied'),
-	(21, 1, 1, 'TKT-107', '7C', 'Y', 'occupied'),
-	(22, 1, 1, NULL, '8A', 'Y', 'available'),
-	(23, 1, 1, NULL, '8B', 'Y', 'available'),
-	(24, 1, 1, NULL, '8C', 'Y', 'available'),
-	(25, 1, 1, NULL, '9A', 'Y', 'available'),
-	(26, 1, 1, NULL, '9B', 'Y', 'available'),
-	(27, 1, 1, NULL, '9C', 'Y', 'available'),
-	(28, 1, 1, 'TKT-108', '10A', 'Y', 'occupied'),
-	(29, 1, 1, NULL, '10B', 'Y', 'available'),
-	(30, 1, 1, NULL, '10C', 'Y', 'available'),
-	(31, 1, 1, NULL, '11A', 'Y', 'available'),
-	(32, 1, 1, NULL, '11B', 'Y', 'available'),
-	(33, 1, 1, NULL, '11C', 'Y', 'available'),
-	(34, 1, 1, NULL, '12A', 'Y', 'available'),
-	(35, 1, 1, NULL, '12B', 'Y', 'available'),
-	(36, 1, 1, NULL, '12C', 'Y', 'available'),
-	(37, 2, 2, 'TKT-201', '1A', 'F', 'occupied'),
-	(38, 2, 2, 'TKT-202', '1B', 'F', 'occupied'),
-	(39, 2, 2, NULL, '1C', 'F', 'available'),
-	(40, 2, 2, NULL, '1D', 'F', 'available'),
-	(41, 2, 2, NULL, '2A', 'F', 'available'),
-	(42, 2, 2, NULL, '2B', 'F', 'available'),
-	(43, 2, 2, 'TKT-203', '2C', 'F', 'occupied'),
-	(44, 2, 2, 'TKT-204', '2D', 'F', 'occupied'),
-	(45, 2, 2, 'TKT-205', '3A', 'C', 'occupied'),
-	(46, 2, 2, 'TKT-206', '3B', 'C', 'occupied'),
-	(47, 2, 2, 'TKT-207', '3C', 'C', 'occupied'),
-	(48, 2, 2, 'TKT-208', '3D', 'C', 'occupied'),
-	(49, 2, 2, NULL, '4A', 'C', 'available'),
-	(50, 2, 2, NULL, '4B', 'C', 'available'),
-	(51, 2, 2, NULL, '4C', 'C', 'available'),
-	(52, 2, 2, NULL, '4D', 'C', 'available'),
-	(53, 2, 2, 'TKT-209', '5A', 'Y', 'occupied'),
-	(54, 2, 2, NULL, '5B', 'Y', 'available'),
-	(55, 2, 2, NULL, '5C', 'Y', 'available'),
-	(56, 2, 2, 'TKT-210', '5D', 'Y', 'occupied'),
-	(57, 2, 2, NULL, '6A', 'Y', 'blocked'),
-	(58, 2, 2, NULL, '6B', 'Y', 'blocked'),
-	(59, 2, 2, NULL, '6C', 'Y', 'blocked'),
-	(60, 2, 2, NULL, '6D', 'Y', 'blocked'),
-	(61, 2, 2, NULL, '7A', 'Y', 'available'),
-	(62, 2, 2, NULL, '7B', 'Y', 'available'),
-	(63, 2, 2, NULL, '7C', 'Y', 'available'),
-	(64, 2, 2, NULL, '7D', 'Y', 'available'),
-	(65, 2, 2, 'TKT-211', '8A', 'Y', 'occupied'),
-	(66, 2, 2, 'TKT-212', '8B', 'Y', 'occupied'),
-	(67, 2, 2, 'TKT-213', '8C', 'Y', 'occupied'),
-	(68, 2, 2, 'TKT-214', '8D', 'Y', 'occupied'),
-	(69, 2, 2, NULL, '9A', 'Y', 'available'),
-	(70, 2, 2, NULL, '9B', 'Y', 'available'),
-	(71, 2, 2, NULL, '9C', 'Y', 'available'),
-	(72, 2, 2, NULL, '9D', 'Y', 'available'),
-	(73, 2, 2, NULL, '10A', 'Y', 'available'),
-	(74, 2, 2, NULL, '10B', 'Y', 'available'),
-	(75, 2, 2, NULL, '10C', 'Y', 'available'),
-	(76, 2, 2, NULL, '10D', 'Y', 'available');
+-- Dumping data for table amadeus.seats: ~0 rows (approximately)
+INSERT INTO `seats` (`id`, `flight_schedule_id`, `aircraft_id`, `ticket_id`, `seat_no`, `class`, `status`, `customer_name`, `customer_number`, `agency_number`) VALUES
+	(1, 1, 1, 'TKT-100', '1A', 'F', 'occupied', NULL, NULL, NULL),
+	(2, 1, 1, NULL, '1B', 'F', 'available', NULL, NULL, NULL),
+	(3, 1, 1, NULL, '1C', 'F', 'available', NULL, NULL, NULL),
+	(4, 1, 1, 'TKT-101', '2A', 'C', 'occupied', NULL, NULL, NULL),
+	(5, 1, 1, 'TKT-102', '2B', 'C', 'occupied', NULL, NULL, NULL),
+	(6, 1, 1, NULL, '2C', 'C', 'available', NULL, NULL, NULL),
+	(7, 1, 1, NULL, '3A', 'C', 'available', NULL, NULL, NULL),
+	(8, 1, 1, NULL, '3B', 'C', 'available', NULL, NULL, NULL),
+	(9, 1, 1, NULL, '3C', 'C', 'available', NULL, NULL, NULL),
+	(10, 1, 1, 'TKT-103', '4A', 'Y', 'occupied', NULL, NULL, NULL),
+	(11, 1, 1, 'TKT-104', '4B', 'Y', 'occupied', NULL, NULL, NULL),
+	(12, 1, 1, 'TKT-105', '4C', 'Y', 'occupied', NULL, NULL, NULL),
+	(13, 1, 1, NULL, '5A', 'Y', 'available', NULL, NULL, NULL),
+	(14, 1, 1, NULL, '5B', 'Y', 'available', NULL, NULL, NULL),
+	(15, 1, 1, NULL, '5C', 'Y', 'available', NULL, NULL, NULL),
+	(16, 1, 1, NULL, '6A', 'Y', 'blocked', NULL, NULL, NULL),
+	(17, 1, 1, NULL, '6B', 'Y', 'blocked', NULL, NULL, NULL),
+	(18, 1, 1, NULL, '6C', 'Y', 'blocked', NULL, NULL, NULL),
+	(19, 1, 1, NULL, '7A', 'Y', 'available', NULL, NULL, NULL),
+	(20, 1, 1, 'TKT-106', '7B', 'Y', 'occupied', NULL, NULL, NULL),
+	(21, 1, 1, 'TKT-107', '7C', 'Y', 'occupied', NULL, NULL, NULL),
+	(22, 1, 1, NULL, '8A', 'Y', 'available', NULL, NULL, NULL),
+	(23, 1, 1, NULL, '8B', 'Y', 'available', NULL, NULL, NULL),
+	(24, 1, 1, NULL, '8C', 'Y', 'available', NULL, NULL, NULL),
+	(25, 1, 1, NULL, '9A', 'Y', 'available', NULL, NULL, NULL),
+	(26, 1, 1, NULL, '9B', 'Y', 'available', NULL, NULL, NULL),
+	(27, 1, 1, NULL, '9C', 'Y', 'available', NULL, NULL, NULL),
+	(28, 1, 1, 'TKT-108', '10A', 'Y', 'occupied', NULL, NULL, NULL),
+	(29, 1, 1, NULL, '10B', 'Y', 'available', NULL, NULL, NULL),
+	(30, 1, 1, NULL, '10C', 'Y', 'available', NULL, NULL, NULL),
+	(31, 1, 1, NULL, '11A', 'Y', 'available', NULL, NULL, NULL),
+	(32, 1, 1, NULL, '11B', 'Y', 'available', NULL, NULL, NULL),
+	(33, 1, 1, NULL, '11C', 'Y', 'available', NULL, NULL, NULL),
+	(34, 1, 1, NULL, '12A', 'Y', 'available', NULL, NULL, NULL),
+	(35, 1, 1, NULL, '12B', 'Y', 'available', NULL, NULL, NULL),
+	(36, 1, 1, NULL, '12C', 'Y', 'available', NULL, NULL, NULL),
+	(37, 2, 2, 'TKT-201', '1A', 'F', 'occupied', NULL, NULL, NULL),
+	(38, 2, 2, 'TKT-202', '1B', 'F', 'occupied', NULL, NULL, NULL),
+	(39, 2, 2, NULL, '1C', 'F', 'available', NULL, NULL, NULL),
+	(40, 2, 2, NULL, '1D', 'F', 'available', NULL, NULL, NULL),
+	(41, 2, 2, NULL, '2A', 'F', 'available', NULL, NULL, NULL),
+	(42, 2, 2, NULL, '2B', 'F', 'available', NULL, NULL, NULL),
+	(43, 2, 2, 'TKT-203', '2C', 'F', 'occupied', NULL, NULL, NULL),
+	(44, 2, 2, 'TKT-204', '2D', 'F', 'occupied', NULL, NULL, NULL),
+	(45, 2, 2, 'TKT-205', '3A', 'C', 'occupied', NULL, NULL, NULL),
+	(46, 2, 2, 'TKT-206', '3B', 'C', 'occupied', NULL, NULL, NULL),
+	(47, 2, 2, 'TKT-207', '3C', 'C', 'occupied', NULL, NULL, NULL),
+	(48, 2, 2, 'TKT-208', '3D', 'C', 'occupied', NULL, NULL, NULL),
+	(49, 2, 2, NULL, '4A', 'C', 'available', NULL, NULL, NULL),
+	(50, 2, 2, NULL, '4B', 'C', 'available', NULL, NULL, NULL),
+	(51, 2, 2, NULL, '4C', 'C', 'available', NULL, NULL, NULL),
+	(52, 2, 2, NULL, '4D', 'C', 'available', NULL, NULL, NULL),
+	(53, 2, 2, 'TKT-209', '5A', 'Y', 'occupied', NULL, NULL, NULL),
+	(54, 2, 2, NULL, '5B', 'Y', 'available', NULL, NULL, NULL),
+	(55, 2, 2, NULL, '5C', 'Y', 'available', NULL, NULL, NULL),
+	(56, 2, 2, 'TKT-210', '5D', 'Y', 'occupied', NULL, NULL, NULL),
+	(57, 2, 2, NULL, '6A', 'Y', 'blocked', NULL, NULL, NULL),
+	(58, 2, 2, NULL, '6B', 'Y', 'blocked', NULL, NULL, NULL),
+	(59, 2, 2, NULL, '6C', 'Y', 'blocked', NULL, NULL, NULL),
+	(60, 2, 2, NULL, '6D', 'Y', 'blocked', NULL, NULL, NULL),
+	(61, 2, 2, NULL, '7A', 'Y', 'available', NULL, NULL, NULL),
+	(62, 2, 2, NULL, '7B', 'Y', 'available', NULL, NULL, NULL),
+	(63, 2, 2, NULL, '7C', 'Y', 'available', NULL, NULL, NULL),
+	(64, 2, 2, NULL, '7D', 'Y', 'available', NULL, NULL, NULL),
+	(65, 2, 2, 'TKT-211', '8A', 'Y', 'occupied', NULL, NULL, NULL),
+	(66, 2, 2, 'TKT-212', '8B', 'Y', 'occupied', NULL, NULL, NULL),
+	(67, 2, 2, 'TKT-213', '8C', 'Y', 'occupied', NULL, NULL, NULL),
+	(68, 2, 2, 'TKT-214', '8D', 'Y', 'occupied', NULL, NULL, NULL),
+	(69, 2, 2, NULL, '9A', 'Y', 'available', NULL, NULL, NULL),
+	(70, 2, 2, NULL, '9B', 'Y', 'available', NULL, NULL, NULL),
+	(71, 2, 2, NULL, '9C', 'Y', 'available', NULL, NULL, NULL),
+	(72, 2, 2, NULL, '9D', 'Y', 'available', NULL, NULL, NULL),
+	(73, 2, 2, NULL, '10A', 'Y', 'available', NULL, NULL, NULL),
+	(74, 2, 2, NULL, '10B', 'Y', 'available', NULL, NULL, NULL),
+	(75, 2, 2, NULL, '10C', 'Y', 'available', NULL, NULL, NULL),
+	(76, 2, 2, NULL, '10D', 'Y', 'available', NULL, NULL, NULL);
 
 -- Dumping structure for table amadeus.users
 CREATE TABLE IF NOT EXISTS `users` (
@@ -284,7 +287,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table amadeus.users: ~2 rows (approximately)
+-- Dumping data for table amadeus.users: ~0 rows (approximately)
 INSERT INTO `users` (`id`, `username`, `password`, `role`) VALUES
 	(1, 'admin', 'admin123', 'admin'),
 	(2, 'traveler', 'user123', 'user');
