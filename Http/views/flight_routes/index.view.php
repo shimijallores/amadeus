@@ -63,17 +63,17 @@ require base_path('Http/views/partials/nav.php');
                         <td class="p-4" data-field="round_trip"><?= ($route['round_trip'] ?? 0) ? 'Yes' : 'No' ?></td>
                         <td class="p-4" data-field="aircraft_model"><?= $route['aircraft_model'] ?? 'N/A' ?></td>
                         <?php if (!\Core\Session::role('user')) : ?>
-                            <td>
+                            <td class="grid grid-cols-3 gap-x-2 p-2">
                                 <button @click="showUpdateModal=true; editData = <?= htmlspecialchars(json_encode($route)) ?>"
                                     type="button"
-                                    class="px-6 py-2 m-4 bg-white min-w-10 text-black border border-black hover:scale-105 rounded transition duration-100 cursor-pointer">
+                                    class="px-6 py-2 bg-white min-w-8 text-black border border-black hover:scale-105 rounded transition duration-100 cursor-pointer">
                                     Edit
                                 </button>
                                 <button @click="showDeleteModal=true; deleteId = <?= $route['id'] ?>" type="button"
-                                    class="px-6 py-2 transition duration-100 hover:scale-105 min-w-10 bg-red-800 text-white rounded hover:bg-neutral-700 cursor-pointer">
+                                    class="px-6 py-2 transition duration-100 hover:scale-105 min-w-8 bg-red-800 text-white rounded hover:bg-neutral-700 cursor-pointer">
                                     Delete
                                 </button>
-                                <button class="px-6 ml-4 py-2 transition duration-100 hover:scale-105 min-w-10 bg-black text-white rounded hover:bg-neutral-700 cursor-pointer">
+                                <button class="px-6 py-2 transition duration-100 hover:scale-105 min-w-8 bg-black text-white rounded hover:bg-neutral-700 cursor-pointer">
                                     <a href="/flight-schedules?schedule=<?= $route['id'] ?>">Schedules</a>
                                 </button>
                             </td>
