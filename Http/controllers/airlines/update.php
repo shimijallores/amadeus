@@ -3,7 +3,6 @@
 use Http\forms\AirlinesForm;
 use Http\models\Airlines;
 
-
 $attributes = [
     'id' => intval($_POST['id']),
     'method' => 'PATCH',
