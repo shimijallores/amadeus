@@ -17,14 +17,14 @@ class AirlineUsers
 
     public function update(array $attributes): void
     {
-        $this->db->query('UPDATE airline_users SET airline_id = :airline_id, user = :user, role = :role WHERE id = :id', [
+        $this->db->query('UPDATE airline_users SET airline_id = :airline_id, username = :username, role = :role WHERE id = :id', [
             'airline_id' => $attributes['airline_id'],
-            'user' => $attributes['user'],
+            'username' => $attributes['username'],
             'role' => $attributes['role'],
             'id' => $attributes['id'],
         ]);
 
-        Session::flash('success', 'Airline user updated successfully!');
+        Session::flash('success', 'Airline username updated successfully!');
     }
 
     public function destroy(array $attributes): void
@@ -33,6 +33,6 @@ class AirlineUsers
             'id' => $attributes['id']
         ]);
 
-        Session::flash('success', 'Airline user deleted successfully!');
+        Session::flash('success', 'Airline username deleted successfully!');
     }
 }

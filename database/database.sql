@@ -25,21 +25,22 @@ CREATE TABLE IF NOT EXISTS `aircraft` (
   `seats_y` int NOT NULL DEFAULT '0',
   `rows` int DEFAULT NULL,
   `columns` int DEFAULT NULL,
+  `layout` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table amadeus.aircraft: ~7 rows (approximately)
-INSERT INTO `aircraft` (`id`, `iata`, `icao`, `model`, `seats_f`, `seats_c`, `seats_y`, `rows`, `columns`) VALUES
-	(1, '320', 'A320', 'Airbus A320-200', 10, 20, 80, 19, 6),
-	(2, '737', 'B737', 'Boeing 737-800', 10, 20, 80, 19, 6),
-	(3, '388', 'A388', 'Airbus A380-800', 0, 0, 0, NULL, NULL),
-	(4, '789', 'B789', 'Boeing 787-9', 0, 0, 0, NULL, NULL),
-	(5, '321', 'A321', 'Airbus A321neo', 0, 0, 0, NULL, NULL),
-	(6, '773', 'B773', 'Boeing 777-300', 0, 0, 0, NULL, NULL),
-	(7, '330', 'A330', 'Airbus A330-300', 0, 0, 0, NULL, NULL),
-	(8, '346', 'A346', 'Airbus A340-600', 0, 0, 0, NULL, NULL),
-	(9, '76W', 'B76W', 'Boeing 767-300ER', 0, 0, 0, NULL, NULL),
-	(10, '321', 'A21X', 'Airbus A321-200 (alt)', 0, 0, 0, NULL, NULL);
+-- Dumping data for table amadeus.aircraft: ~10 rows (approximately)
+INSERT INTO `aircraft` (`id`, `iata`, `icao`, `model`, `seats_f`, `seats_c`, `seats_y`, `rows`, `columns`, `layout`) VALUES
+	(1, '320', 'A320', 'Airbus A320-200', 10, 20, 80, 19, 6, NULL),
+	(2, '737', 'B737', 'Boeing 737-800', 10, 20, 80, 19, 6, NULL),
+	(3, '388', 'A388', 'Airbus A380-800', 0, 0, 0, NULL, NULL, NULL),
+	(4, '789', 'B789', 'Boeing 787-9', 0, 0, 0, NULL, NULL, NULL),
+	(5, '321', 'A321', 'Airbus A321neo', 0, 0, 0, NULL, NULL, NULL),
+	(6, '773', 'B773', 'Boeing 777-300', 0, 0, 0, NULL, NULL, NULL),
+	(7, '330', 'A330', 'Airbus A330-300', 0, 0, 0, NULL, NULL, NULL),
+	(8, '346', 'A346', 'Airbus A340-600', 0, 0, 0, NULL, NULL, NULL),
+	(9, '76W', 'B76W', 'Boeing 767-300ER', 0, 0, 0, NULL, NULL, NULL),
+	(10, '321', 'A21X', 'Airbus A321-200 (alt)', 0, 0, 0, NULL, NULL, NULL);
 
 -- Dumping structure for table amadeus.airlines
 CREATE TABLE IF NOT EXISTS `airlines` (
@@ -183,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `flight_schedules` (
   CONSTRAINT `FK_flight_schedules_user` FOREIGN KEY (`airline_user_id`) REFERENCES `airline_users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table amadeus.flight_schedules: ~0 rows (approximately)
+-- Dumping data for table amadeus.flight_schedules: ~40 rows (approximately)
 INSERT INTO `flight_schedules` (`id`, `airline_user_id`, `flight_route_id`, `aircraft_id`, `date_departure`, `time_departure`, `date_arrival`, `time_arrival`, `status`, `price_f`, `price_c`, `price_y`) VALUES
 	(1, 1, 1, 1, '2025-10-01', '08:00', '2025-10-01', '16:00', 'scheduled', 1200.00, 800.00, 300.00),
 	(2, 1, 1, 1, '2025-10-02', '20:00', '2025-10-03', '04:00', 'scheduled', 1250.00, 820.00, 320.00),
@@ -235,7 +236,7 @@ CREATE TABLE IF NOT EXISTS `passengers` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table amadeus.passengers: ~0 rows (approximately)
+-- Dumping data for table amadeus.passengers: ~3 rows (approximately)
 INSERT INTO `passengers` (`id`, `name`, `email`, `phone`) VALUES
 	(1, 'Shimi Uzziel Jallores', 'shimijallores35@gmail.com', '09561434976'),
 	(4, 'Estephanie Anne De Torres', 'estephanieanne35@gmail.com', '09561434976'),
@@ -259,7 +260,7 @@ CREATE TABLE IF NOT EXISTS `seats` (
   CONSTRAINT `FK_seats_schedule` FOREIGN KEY (`flight_schedule_id`) REFERENCES `flight_schedules` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=441 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table amadeus.seats: ~0 rows (approximately)
+-- Dumping data for table amadeus.seats: ~440 rows (approximately)
 INSERT INTO `seats` (`id`, `flight_schedule_id`, `aircraft_id`, `ticket_id`, `seat_no`, `row`, `column`, `class`, `status`) VALUES
 	(1, 1, 1, NULL, 'F1', 1, 1, 'F', 'occupied'),
 	(2, 1, 1, NULL, 'F2', 1, 6, 'F', 'available'),

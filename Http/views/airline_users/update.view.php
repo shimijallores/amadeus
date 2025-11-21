@@ -31,12 +31,12 @@
                     </select>
                 </div>
                 <div class="flex w-full flex-col gap-1 text-white">
-                    <label for="user" class="w-fit pl-0.5 text-sm text-white">USERNAME</label>
-                    <input id="user" type="text" :value="editData ? editData.username ?? '' : ''" class="w-full rounded-sm border border-neutral-300 min-w-92 font-medium bg-neutral-50 p-3 text-black dark:text-white text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white" name="user" placeholder="" autocomplete="username" />
+                    <label for="username" class="w-fit pl-0.5 text-sm text-white">USERNAME</label>
+                    <input id="username" type="text" :value="editData ? editData.username ?? '' : ''" class="w-full rounded-sm border border-neutral-300 min-w-92 font-medium bg-neutral-50 p-3 text-black dark:text-white text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white" name="username" placeholder="" autocomplete="username" />
                 </div>
                 <div class="flex w-full flex-col gap-1 text-white">
-                    <label for="type" class="w-fit pl-0.5 text-sm text-white">TYPE</label>
-                    <select id="type" name="type" class="w-full rounded-sm border border-neutral-300 min-w-92 font-medium bg-neutral-50 p-3 text-black dark:text-white text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
+                    <label for="role" class="w-fit pl-0.5 text-sm text-white">ROLE</label>
+                    <select id="role" name="role" class="w-full rounded-sm border border-neutral-300 min-w-92 font-medium bg-neutral-50 p-3 text-black dark:text-white text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
                         <option :selected="editData && editData.role == 'admin'" value="admin">Admin</option>
                         <option :selected="editData && editData.role == 'staff'" value="staff">Staff</option>
                     </select>
