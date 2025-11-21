@@ -49,10 +49,11 @@ require base_path('Http/views/partials/nav.php');
                     <th scope="col" class="p-4">ID</th>
                     <th scope="col" class="p-4">AIRLINE USER</th>
                     <th scope="col" class="p-4">AIRLINE</th>
-                    <th scope="col" class="p-4">ROUTE</th>
+                    <th scope="col" class="p-4 w-64">ROUTE</th>
                     <th scope="col" class="p-4">DEPARTURE</th>
                     <th scope="col" class="p-4">ARRIVAL</th>
                     <th scope="col" class="p-4">STATUS</th>
+                    <th scope="col" class="p-4">BASE PRICE</th>
                     <?php if (!\Core\Session::role('user')) : ?>
                         <th scope="col" class="p-4">ACTION</th>
                     <?php endif; ?>
@@ -65,7 +66,7 @@ require base_path('Http/views/partials/nav.php');
                         <td class="p-4"
                             data-field="airline_user_name"><?= $schedule['airline_user_name'] ?? 'N/A' ?></td>
                         <td class="p-4" data-field="airline_name"><?= $schedule['airline_name'] ?? 'N/A' ?></td>
-                        <td class="p-4 text-wrap w-12" data-field="route_display"><?= $schedule['route_display'] ?? 'N/A' ?></td>
+                        <td class="p-4 text-wrap w-64" data-field="route_display"><?= $schedule['route_display'] ?? 'N/A' ?></td>
                         <td class="p-4"
                             data-field="departure"><?= ($schedule['date_departure'] ?? 'N/A') . ' ' . ($schedule['time_departure'] ?? '') ?></td>
                         <td class="p-4"
@@ -99,20 +100,31 @@ require base_path('Http/views/partials/nav.php');
                                 <?= $schedule['status'] ?? 'N/A' ?>
                             </span>
                         </td>
+                        <td class="p-4" data-field="pricing">
+                            <div>
+                                <p>First: <?= '₱' . number_format($schedule['price_f'])  ?></p>
+                                <p>Business: <?= '₱' . number_format($schedule['price_c'])  ?></p>
+                                <p>Economy: <?= '₱' . number_format($schedule['price_y'])  ?></p>
+                            </div>
+                        </td>
                         <?php if (!\Core\Session::role('user')) : ?>
-                            <td>
+                            <td class="grid grid-cols-2 grid-rows-2">
                                 <button @click="showUpdateModal=true; editData = <?= htmlspecialchars(json_encode($schedule)) ?>"
                                     type="button"
-                                    class="px-6 py-2 m-4 bg-white min-w-10 text-black border border-black hover:scale-105 rounded transition duration-100 cursor-pointer">
+                                    class="px-6 py-2 m-2 bg-white min-w-10 text-black border border-black hover:scale-105 rounded transition duration-100 cursor-pointer">
                                     Edit
                                 </button>
                                 <button @click="showDeleteModal=true; deleteId = <?= $schedule['id'] ?>" type="button"
-                                    class="px-6 py-2 transition duration-100 hover:scale-105 min-w-10 bg-red-800 text-white rounded hover:bg-neutral-700 cursor-pointer">
+                                    class="px-6 py-2 m-2 bg-red-600 min-w-10 text-white border border-red-700 hover:scale-105 rounded transition duration-100 cursor-pointer">
                                     Delete
                                 </button>
-                                <button @click="showSeatsModal=true; scheduleData = <?= htmlspecialchars(json_encode($schedule['seats'])) ?>; console.log(scheduleData)" type="button"
-                                    class="px-6 ml-4 py-2 transition duration-100 hover:scale-105 min-w-10 bg-black text-white rounded hover:bg-neutral-700 cursor-pointer">
+                                <button @click="showSeatsModal=true; scheduleData = <?= htmlspecialchars(json_encode($schedule['seats'])) ?>;" type="button"
+                                    class="px-6 py-2 m-2 bg-neutral-900 min-w-10 text-white border border-black hover:scale-105 rounded transition duration-100 cursor-pointer">
                                     Seats
+                                </button>
+                                <button @click="alert('feature to be implemented')" type="button"
+                                    class="px-6 py-2 m-2 bg-green-700 min-w-10 text-white border border-green-700 hover:scale-105 rounded transition duration-100 cursor-pointer">
+                                    Visualize
                                 </button>
                             </td>
                         <?php endif; ?>
@@ -134,7 +146,7 @@ require base_path('Http/views/partials/nav.php');
             ["status", "Status"]
         ];
 
-        FilterComponent.init('filterContainer', flightSchedulesFields, 'flightSchedulesTable', <?= json_encode($selectedRoute['airline'] ?? '') ?>);
+        FilterComponent.init('filterContainer', flightSchedulesFields, 'flightSchedulesTable', <?= json_encode($selectedRoute ? $selectedRoute['airline'] : '') ?>);
     });
 </script>
 

@@ -11,7 +11,6 @@ $attributes = [
     'role' => $_POST['role'],
 ];
 
-
 AirlineUsersForm::validate($attributes);
 
 (new AirlineUsers())->update($attributes);
