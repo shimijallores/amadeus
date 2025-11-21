@@ -104,6 +104,30 @@
                         <p class="text-red-500 text-sm"><?= $errors['status'] ?></p>
                     <?php endif; ?>
                 </div>
+
+                <div class="flex w-full flex-col gap-1 text-white">
+                    <label for="price_f" class="w-fit pl-0.5 text-sm text-white">First Class Price</label>
+                    <input id="price_f" type="number" :value="editData ? editData.price_f ?? '' : ''" class="w-full rounded-sm border border-neutral-300 font-medium bg-neutral-50 p-3 text-black dark:text-white text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white" name="price_f" placeholder="YYYY-MM-DD" />
+                    <?php if (isset($errors['price_f'])): ?>
+                        <p class="text-red-500 text-sm"><?= $errors['price_f'] ?></p>
+                    <?php endif; ?>
+                </div>
+
+                <div class="flex w-full flex-col gap-1 text-white">
+                    <label for="price_c" class="w-fit pl-0.5 text-sm text-white">Business Class Price</label>
+                    <input id="price_c" type="number" :value="editData ? editData.price_c ?? '' : ''" class="w-full rounded-sm border border-neutral-300 font-medium bg-neutral-50 p-3 text-black dark:text-white text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white" name="price_c" placeholder="YYYY-MM-DD" />
+                    <?php if (isset($errors['price_c'])): ?>
+                        <p class="text-red-500 text-sm"><?= $errors['price_c'] ?></p>
+                    <?php endif; ?>
+                </div>
+
+                <div class="flex w-full flex-col gap-1 text-white">
+                    <label for="price_y" class="w-fit pl-0.5 text-sm text-white">Economy Class Price</label>
+                    <input id="price_y" type="number" :value="editData ? editData.price_y ?? '' : ''" class="w-full rounded-sm border border-neutral-300 font-medium bg-neutral-50 p-3 text-black dark:text-white text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white" name="price_y" placeholder="YYYY-MM-DD" />
+                    <?php if (isset($errors['price_y'])): ?>
+                        <p class="text-red-500 text-sm"><?= $errors['price_y'] ?></p>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
         <!-- Dialog Footer -->

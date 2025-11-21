@@ -12,6 +12,9 @@ $attributes = [
     'time_departure' => $_POST['time_departure'],
     'date_arrival' => $_POST['date_arrival'],
     'time_arrival' => $_POST['time_arrival'],
+    'price_f' => $_POST['price_f'],
+    'price_c' => $_POST['price_c'],
+    'price_y' => $_POST['price_y'],
     'status' => $_POST['status'],
 ];
 

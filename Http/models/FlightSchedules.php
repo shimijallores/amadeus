@@ -17,7 +17,7 @@ class FlightSchedules
 
     public function update(array $attributes): void
     {
-        $this->db->query('UPDATE flight_schedules SET airline_user_id = :airline_user_id, flight_route_id = :flight_route_id, date_departure = :date_departure, time_departure = :time_departure, date_arrival = :date_arrival, time_arrival = :time_arrival, status = :status WHERE id = :id', [
+        $this->db->query('UPDATE flight_schedules SET airline_user_id = :airline_user_id, flight_route_id = :flight_route_id, date_departure = :date_departure, time_departure = :time_departure, date_arrival = :date_arrival, time_arrival = :time_arrival, status = :status, price_f = :price_f, price_y = :price_y, price_c = :price_c WHERE id = :id', [
             'id' => $attributes['id'],
             'airline_user_id' => $attributes['airline_user_id'],
             'flight_route_id' => $attributes['flight_route_id'],
@@ -26,6 +26,9 @@ class FlightSchedules
             'date_arrival' => $attributes['date_arrival'],
             'time_arrival' => $attributes['time_arrival'],
             'status' => $attributes['status'],
+            'price_f' => $attributes['price_f'],
+            'price_y' => $attributes['price_y'],
+            'price_c' => $attributes['price_c'],
         ]);
 
         Session::flash('success', 'Flight schedule updated successfully!');

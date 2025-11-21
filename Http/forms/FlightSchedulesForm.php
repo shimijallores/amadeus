@@ -37,5 +37,18 @@ class FlightSchedulesForm extends Form
         if (!Validator::string($this->attributes['status'], 1, 50)) {
             $this->error('status', 'Status is required.');
         }
+
+        if (!Validator::number($this->attributes['price_f'], 1)) {
+            $this->error('price_f', 'First class price is required.');
+        }
+
+        if (!Validator::number($this->attributes['price_c'], 1)) {
+            $this->error('price_c', 'Business class price is required.');
+        }
+
+
+        if (!Validator::number($this->attributes['price_y'], 1)) {
+            $this->error('price_y', 'Economy class price is required.');
+        }
     }
 }
