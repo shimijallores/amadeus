@@ -23,6 +23,7 @@
                 <input type="hidden" name="_method" value="PATCH">
                 <input type="hidden" name="id" :value="editData ? editData.id : ''">
 
+                <!-- Airline User ID -->
                 <div class="flex w-full flex-col gap-1 text-white">
                     <label for="airline_user_id" class="w-fit pl-0.5 text-sm text-white">Airline User</label>
                     <select id="airline_user_id" name="airline_user_id" class="w-full rounded-sm border border-neutral-300 min-w-92 font-medium bg-neutral-50 p-3 text-black dark:text-white text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
@@ -38,6 +39,7 @@
                     <?php endif; ?>
                 </div>
 
+                <!-- Flight Route ID -->
                 <div class="flex w-full flex-col gap-1 text-white">
                     <label for="flight_route_id" class="w-fit pl-0.5 text-sm text-white">Flight Route</label>
                     <select id="flight_route_id" name="flight_route_id" class="w-full rounded-sm border border-neutral-300 min-w-92 font-medium bg-neutral-50 p-3 text-black dark:text-white text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
@@ -91,12 +93,12 @@
                     <label for="status" class="w-fit pl-0.5 text-sm text-white">Status</label>
                     <select id="status" name="status" class="w-full rounded-sm border border-neutral-300 min-w-92 font-medium bg-neutral-50 p-3 text-black dark:text-white text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:focus-visible:outline-white">
                         <option value="">Select Status</option>
-                        <option value="Scheduled" :selected="editData && editData.status == 'Scheduled'">Scheduled</option>
-                        <option value="Boarding" :selected="editData && editData.status == 'Boarding'">Boarding</option>
-                        <option value="Departed" :selected="editData && editData.status == 'Departed'">Departed</option>
-                        <option value="Arrived" :selected="editData && editData.status == 'Arrived'">Arrived</option>
-                        <option value="Cancelled" :selected="editData && editData.status == 'Cancelled'">Cancelled</option>
-                        <option value="Delayed" :selected="editData && editData.status == 'Delayed'">Delayed</option>
+                        <option value="scheduled" :selected="editData && editData.status == 'scheduled'">Scheduled</option>
+                        <option value="boarding" :selected="editData && editData.status == 'boarding'">Boarding</option>
+                        <option value="departed" :selected="editData && editData.status == 'departed'">Departed</option>
+                        <option value="arrived" :selected="editData && editData.status == 'arrived'">Arrived</option>
+                        <option value="cancelled" :selected="editData && editData.status == 'cancelled'">Cancelled</option>
+                        <option value="delayed" :selected="editData && editData.status == 'delayed'">Delayed</option>
                     </select>
                     <?php if (isset($errors['status'])): ?>
                         <p class="text-red-500 text-sm"><?= $errors['status'] ?></p>

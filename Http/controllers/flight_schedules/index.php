@@ -23,6 +23,10 @@ $query = "
            dest.airport_name as destination_airport_name,
            fs.date_departure,
            fs.date_arrival,
+           fs.time_departure,
+           fs.time_arrival,
+           fs.flight_route_id,
+           fs.airline_user_id,
            fs.status,
            fs.price_f,
            fs.price_c,
@@ -69,12 +73,16 @@ foreach ($rows as $row) {
         $schedules[$fs_id] = [
             'id' => $row['id'],
             'airline_user_name' => $row['airline_user_name'],
+            'flight_route_id' => $row['flight_route_id'],
+            'airline_user_id' => $row['airline_user_id'],
             'airline_name' => $row['airline_name'],
             'origin_airport_name' => $row['origin_airport_name'],
             'destination_airport_name' => $row['destination_airport_name'],
             'route_display' => $row['route_display'],
             'date_departure' => $row['date_departure'],
             'date_arrival' => $row['date_arrival'],
+            'time_departure' => $row['time_departure'],
+            'time_arrival' => $row['time_arrival'],
             'status' => $row['status'],
             'price_f' => $row['price_f'],
             'price_c' => $row['price_c'],
@@ -95,6 +103,7 @@ foreach ($rows as $row) {
             'rows' => $row['rows'],
             'columns' => $row['columns'],
             'class' => $row['class'],
+            'status' => $row['status'],
             'seat_status' => $row['seat_status']
         ];
     }

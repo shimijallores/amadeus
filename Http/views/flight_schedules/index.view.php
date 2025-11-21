@@ -48,7 +48,7 @@ require base_path('Http/views/partials/nav.php');
                 <tr>
                     <th scope="col" class="p-4">ID</th>
                     <th scope="col" class="p-4">AIRLINE USER</th>
-                    <th scope="col" class="p-4">AIRLINE</th>
+                    <th scope="col" class="py-4 px-2">AIRLINE</th>
                     <th scope="col" class="p-4 w-64">ROUTE</th>
                     <th scope="col" class="p-4">DEPARTURE</th>
                     <th scope="col" class="p-4">ARRIVAL</th>
@@ -65,32 +65,32 @@ require base_path('Http/views/partials/nav.php');
                         <td class="p-4" data-field="id"><?= $schedule['id'] ?? 'N/A' ?></td>
                         <td class="p-4"
                             data-field="airline_user_name"><?= $schedule['airline_user_name'] ?? 'N/A' ?></td>
-                        <td class="p-4" data-field="airline_name"><?= $schedule['airline_name'] ?? 'N/A' ?></td>
+                        <td class="py-4 px-2" data-field="airline_name"><?= $schedule['airline_name'] ?? 'N/A' ?></td>
                         <td class="p-4 text-wrap w-64" data-field="route_display"><?= $schedule['route_display'] ?? 'N/A' ?></td>
                         <td class="p-4"
-                            data-field="departure"><?= ($schedule['date_departure'] ?? 'N/A') . ' ' . ($schedule['time_departure'] ?? '') ?></td>
+                            data-field="departure"><?= ($schedule['date_departure'] ?? 'N/A') ?></td>
                         <td class="p-4"
-                            data-field="arrival"><?= ($schedule['date_arrival'] ?? 'N/A') . ' ' . ($schedule['time_arrival'] ?? '') ?></td>
+                            data-field="arrival"><?= ($schedule['date_arrival'] ?? 'N/A') ?></td>
                         <td class="p-4" data-field="status">
                             <span class="px-2 py-1 text-xs font-medium rounded-full
                                 <?php
                                 switch ($schedule['status'] ?? '') {
-                                    case 'Scheduled':
+                                    case 'scheduled':
                                         echo 'bg-blue-100 text-blue-800';
                                         break;
-                                    case 'Boarding':
+                                    case 'boarding':
                                         echo 'bg-yellow-100 text-yellow-800';
                                         break;
-                                    case 'Departed':
+                                    case 'departed':
                                         echo 'bg-green-100 text-green-800';
                                         break;
-                                    case 'Arrived':
+                                    case 'arrived':
                                         echo 'bg-purple-100 text-purple-800';
                                         break;
-                                    case 'Cancelled':
+                                    case 'cancelled':
                                         echo 'bg-red-100 text-red-800';
                                         break;
-                                    case 'Delayed':
+                                    case 'delayed':
                                         echo 'bg-orange-100 text-orange-800';
                                         break;
                                     default:
