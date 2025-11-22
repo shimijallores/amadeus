@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `aircraft` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table amadeus.aircraft: ~0 rows (approximately)
+-- Dumping data for table amadeus.aircraft: ~5 rows (approximately)
 INSERT INTO `aircraft` (`id`, `iata`, `icao`, `model`, `seats_f`, `seats_c`, `seats_y`, `rows`, `columns`, `layout`) VALUES
 	(1, 'E90', 'E190', 'Embraer E190 Custom', 3, 6, 27, 12, 4, '1011 1011 1011 1011 1011 1011 1011 1011 1011 1011 1011 1011'),
 	(2, 'CRJ', 'CRJ9', 'Bombardier CRJ-900', 8, 8, 24, 10, 5, '11011 11011 11011 11011 11011 11011 11011 11011 11011 11011'),
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `airlines` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table amadeus.airlines: ~0 rows (approximately)
+-- Dumping data for table amadeus.airlines: ~5 rows (approximately)
 INSERT INTO `airlines` (`id`, `iata`, `icao`, `airline`, `callsign`, `country`, `comments`) VALUES
 	(1, 'DLA', 'DALS', 'Delta Air Lines', 'DELTA', 'USA', 'SkyTeam Alliance'),
 	(2, 'LHA', 'DLHA', 'Lufthansa', 'LUFTHANSA', 'Germany', 'Star Alliance'),
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `airline_users` (
   CONSTRAINT `FK_airline` FOREIGN KEY (`airline_id`) REFERENCES `airlines` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table amadeus.airline_users: ~0 rows (approximately)
+-- Dumping data for table amadeus.airline_users: ~5 rows (approximately)
 INSERT INTO `airline_users` (`id`, `airline_id`, `username`, `password`, `role`) VALUES
 	(1, 1, 'delta_mgr', 'pass123', 'manager'),
 	(2, 2, 'lufthansa_ops', 'pass123', 'manager'),
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `airports` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table amadeus.airports: ~0 rows (approximately)
+-- Dumping data for table amadeus.airports: ~5 rows (approximately)
 INSERT INTO `airports` (`id`, `iata`, `icao`, `airport_name`, `location_served`, `time`, `dst`) VALUES
 	(1, 'JFK', 'KJFK', 'John F. Kennedy', 'New York, USA', 'UTC-5', 'Yes'),
 	(2, 'LHR', 'EGLL', 'Heathrow', 'London, UK', 'UTC+0', 'Yes'),
@@ -116,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `flight_routes` (
   CONSTRAINT `FK_flight_routes_origin` FOREIGN KEY (`origin_airport_id`) REFERENCES `airports` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table amadeus.flight_routes: ~0 rows (approximately)
+-- Dumping data for table amadeus.flight_routes: ~10 rows (approximately)
 INSERT INTO `flight_routes` (`id`, `airline_id`, `origin_airport_id`, `destination_airport_id`, `round_trip`, `aircraft_id`) VALUES
 	(1, 1, 1, 2, 1, 1),
 	(2, 1, 2, 1, 1, 1),
@@ -152,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `flight_schedules` (
   CONSTRAINT `FK_flight_schedules_user` FOREIGN KEY (`airline_user_id`) REFERENCES `airline_users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table amadeus.flight_schedules: ~0 rows (approximately)
+-- Dumping data for table amadeus.flight_schedules: ~10 rows (approximately)
 INSERT INTO `flight_schedules` (`id`, `airline_user_id`, `flight_route_id`, `aircraft_id`, `date_departure`, `time_departure`, `date_arrival`, `time_arrival`, `status`, `price_f`, `price_c`, `price_y`) VALUES
 	(1, 1, 1, 1, '2025-11-25', '08:00', '2025-11-25', '20:00', 'Scheduled', 0.00, 1500.00, 400.00),
 	(2, 2, 3, 2, '2025-11-26', '10:00', '2025-11-27', '05:00', 'Scheduled', 0.00, 1800.00, 500.00),
@@ -174,7 +174,7 @@ CREATE TABLE IF NOT EXISTS `passengers` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table amadeus.passengers: ~0 rows (approximately)
+-- Dumping data for table amadeus.passengers: ~3 rows (approximately)
 INSERT INTO `passengers` (`id`, `name`, `email`, `phone`) VALUES
 	(1, 'Alice Johnson', 'alice@example.com', '555-0101'),
 	(2, 'Bob Smith', 'bob@test.com', '555-0102'),
@@ -191,8 +191,8 @@ CREATE TABLE IF NOT EXISTS `seats` (
   `status` enum('available','occupied','blocked') NOT NULL DEFAULT 'available',
   `price` int DEFAULT NULL,
   `customer_name` varchar(250) DEFAULT NULL,
-  `customer_number` int DEFAULT NULL,
-  `agency_number` int DEFAULT NULL,
+  `customer_number` varchar(50) DEFAULT NULL,
+  `agency_number` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_seats_schedule` (`flight_schedule_id`),
   KEY `FK_seats_aircraft` (`aircraft_id`),
@@ -202,9 +202,9 @@ CREATE TABLE IF NOT EXISTS `seats` (
 
 -- Dumping data for table amadeus.seats: ~76 rows (approximately)
 INSERT INTO `seats` (`id`, `flight_schedule_id`, `aircraft_id`, `ticket_id`, `seat_no`, `class`, `status`, `price`, `customer_name`, `customer_number`, `agency_number`) VALUES
-	(1, 1, 1, 'TKT-100', '1A', 'F', 'occupied', NULL, NULL, NULL, NULL),
+	(1, 1, 1, 'TKT-100', '1A', 'F', 'occupied', 500, 'Shimi Jallores', '09289287057', '09561434976'),
 	(2, 1, 1, NULL, '1B', 'F', 'available', NULL, NULL, NULL, NULL),
-	(3, 1, 1, NULL, '1C', 'F', 'available', NULL, NULL, NULL, NULL),
+	(3, 1, 1, NULL, '1C', 'F', 'occupied', 32000, 'Estephanie Anne M. De Torres', '09289287057', '09561434976'),
 	(4, 1, 1, 'TKT-101', '2A', 'C', 'occupied', NULL, NULL, NULL, NULL),
 	(5, 1, 1, 'TKT-102', '2B', 'C', 'occupied', NULL, NULL, NULL, NULL),
 	(6, 1, 1, NULL, '2C', 'C', 'available', NULL, NULL, NULL, NULL),
@@ -288,7 +288,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table amadeus.users: ~0 rows (approximately)
+-- Dumping data for table amadeus.users: ~2 rows (approximately)
 INSERT INTO `users` (`id`, `username`, `password`, `role`) VALUES
 	(1, 'admin', 'admin123', 'admin'),
 	(2, 'traveler', 'user123', 'user');

@@ -19,6 +19,8 @@ $query = "
            s.status as seat_status,
            s.customer_name,
            s.customer_number,
+           s.agency_number,
+           s.price,
            orig.airport_name as origin_airport_name,
            dest.airport_name as destination_airport_name,
            fs.date_departure,
@@ -103,9 +105,11 @@ foreach ($rows as $row) {
             'columns' => $row['columns'],
             'class' => $row['class'],
             'status' => $row['status'],
+            'price' => $row['price'],
             'seat_status' => $row['seat_status'],
             'customer_name' => $row['customer_name'],
             'customer_number' => $row['customer_number'],
+            'agency_number' => $row['agency_number'],
             'layout' => $row['layout']
         ];
     }

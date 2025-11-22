@@ -61,8 +61,8 @@ require base_path('Http/views/partials/nav.php');
         const className = seat.class === 'F' ? 'First Class' : seat.class === 'C' ? 'Business Class' : 'Economy Class';
         let details = `Seat: ${seat.seat_no}\n`;
         details += `Ticket ID: ${seat.ticket_id || 'N/A'}\n`;
+        details += `Price: ₱${seat.price}\n`;
         details += `Customer: ${seat.customer_name || 'N/A'}\n`;
-        details += `Class: ${className}\n`;
         details += `Status: ${seat.seat_status}\n`;
         
         return details;

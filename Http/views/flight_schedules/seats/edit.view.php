@@ -48,13 +48,6 @@
           class="w-full px-3 py-2 border border-neutral-300 rounded focus:outline-none focus:ring-2 focus:ring-black dark:bg-neutral-800 dark:border-neutral-600">
       </div>
 
-      <!-- Ticket ID -->
-      <div>
-        <label class="block text-sm font-medium mb-1">Ticket ID</label>
-        <input type="text" name="ticket_id" :value="selectedSeat?.ticket_id"
-          class="w-full px-3 py-2 border border-neutral-300 rounded focus:outline-none focus:ring-2 focus:ring-black dark:bg-neutral-800 dark:border-neutral-600">
-      </div>
-
       <!-- Customer Name -->
       <div>
         <label class="block text-sm font-medium mb-1">Customer Name</label>
