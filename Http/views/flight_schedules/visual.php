@@ -55,7 +55,7 @@
                                     <!-- Seats in Row -->
                                     <template x-for="(col, colIndex) in row.split('')" :key="colIndex">
                                         <div>
-                                            <div @click="console.log(getSeatId(rowIndex + 1, colIndex + 1));" x-show="col === '1'"
+                                            <div @click="selectedSeat = getSeatData(rowIndex + 1, colIndex + 1); showSeatEditModal = true;" x-show="col === '1'"
                                                 class="w-10 h-10 flex items-center justify-center text-xs font-semibold rounded border-2 cursor-pointer transition hover:scale-110 duration-300"
                                                 :class="{
                                                     'border-green-400': getSeatStatus(rowIndex + 1, colIndex + 1) === 'available',
@@ -92,3 +92,6 @@
         </div>
     </div>
 </div>
+
+<!-- Seat Edit Modal -->
+<?php require base_path('Http/views/flight_schedules/seats/edit.view.php') ?>

@@ -34,6 +34,9 @@ $router->get('/flight-schedules', 'flight_schedules/index.php')->only('admin');
 $router->delete('/flight-schedules', 'flight_schedules/destroy.php')->only('admin');
 $router->patch('/flight-schedules', 'flight_schedules/update.php')->only('admin');
 
+// Seats
+$router->patch('/seats', 'seats/update.php')->only('admin');
+
 //Login
 $router->get('/login', 'authentication/login.php')->only('guest');
 $router->post('/login', 'authentication/signin.php')->only('guest');

@@ -9,6 +9,8 @@ require base_path('Http/views/partials/nav.php');
     editData: null, 
     showSeatsModal: false, 
     showVisualModal: false, 
+    showSeatEditModal: false,
+    selectedSeat: null,
     scheduleData: [],
     getSeatNumber(row, col) {
         if (!this.scheduleData || this.scheduleData.length === 0) return '';
@@ -42,6 +44,12 @@ require base_path('Http/views/partials/nav.php');
         const seat = this.scheduleData.find(s => s.seat_no === seatNumber);
         
         return seat.seat_id;
+    },
+    getSeatData(row, col) {
+        if (!this.scheduleData || this.scheduleData.length === 0) return null;
+        const seatNumber = this.getSeatNumber(row, col);
+        const seat = this.scheduleData.find(s => s.seat_no === seatNumber);
+        return seat || null;
     },
     getSeatDetails(row, col) {
         if (!this.scheduleData || this.scheduleData.length === 0) return 'No details available';
