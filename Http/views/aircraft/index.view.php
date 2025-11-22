@@ -10,8 +10,23 @@ require base_path('Http/views/partials/nav.php');
     showVisualModal: false,
     visualData: null,
     getAircraftSeatNumber(row, col) {
+        if (!this.visualData || !this.visualData.layout) return '';
+        const layout = this.visualData.layout;
+        const rows = layout.split(' ');
+        if (row < 1 || row > rows.length) return '';
+        
+        const rowLayout = rows[row - 1];
         const columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'];
-        return row + columns[col - 1];
+        
+        // Count only actual seats (1s) up to the current column
+        let seatCount = 0;
+        for (let i = 0; i < col; i++) {
+            if (rowLayout[i] === '1') {
+                seatCount++;
+            }
+        }
+        
+        return row + columns[seatCount - 1];
     },
     getAircraftSeatClass(row) {
         if (!this.visualData) return 'Y';

@@ -63,7 +63,7 @@
                     <div>
                       <div x-show="col === '1'"
                         class="w-10 h-10 flex items-center justify-center text-xs font-semibold rounded border-2 border-blue-400 cursor-pointer transition hover:scale-110 duration-300"
-                        x-text="getAircraftSeatNumber(rowIndex + 1, colIndex + 1)"
+                        x-text="col === '1' ? getAircraftSeatNumber(rowIndex + 1, colIndex + 1) : ''"
                         :title="'Seat ' + getAircraftSeatNumber(rowIndex + 1, colIndex + 1)">
                       </div>
                       <div x-show="col === '0'" class="w-10 h-10 flex items-center justify-center text-neutral-400 text-xs">
