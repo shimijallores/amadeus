@@ -15,9 +15,10 @@ $router->post('/airports', 'airports/store.php')->only('admin');
 
 // Aircraft
 $router->get('/aircraft', 'aircraft/index.php')->only('admin');
+$router->post('/aircraft', 'aircraft/store.php')->only('admin');
 $router->delete('/aircraft', 'aircraft/destroy.php')->only('admin');
 $router->patch('/aircraft', 'aircraft/update.php')->only('admin');
-$router->post('/aircraft', 'aircraft/store.php')->only('admin');
+$router->patch('/aircraft-layout', 'aircraft/update-layout.php')->only('admin');
 
 // Airline Users
 $router->get('/airline-users', 'airline_users/index.php')->only('admin');

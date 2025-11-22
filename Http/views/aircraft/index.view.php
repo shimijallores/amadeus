@@ -9,6 +9,98 @@ require base_path('Http/views/partials/nav.php');
     editData: null,
     showVisualModal: false,
     visualData: null,
+    showLayoutBuilder: false,
+    builderData: null,
+    layoutConfig: {
+        firstClass: { rows: 0, columns: 0, seats: 0, grid: [] },
+        businessClass: { rows: 0, columns: 0, seats: 0, grid: [] },
+        economyClass: { rows: 0, columns: 0, seats: 0, grid: [] }
+    },
+    initLayoutBuilder(aircraft) {
+        this.builderData = aircraft;
+        this.layoutConfig = {
+            firstClass: { rows: 0, columns: 0, seats: aircraft.seats_f || 0, grid: [] },
+            businessClass: { rows: 0, columns: 0, seats: aircraft.seats_c || 0, grid: [] },
+            economyClass: { rows: 0, columns: 0, seats: aircraft.seats_y || 0, grid: [] }
+        };
+        if (aircraft.layout) {
+            this.parseExistingLayout(aircraft);
+        }
+        this.showLayoutBuilder = true;
+    },
+    parseExistingLayout(aircraft) {
+        if (!aircraft.layout) return;
+        const rows = aircraft.layout.split(' ');
+        const cols = aircraft.columns || 0;
+        
+        // Determine rows for each class based on seat counts
+        const rowsF = aircraft.seats_f > 0 ? Math.ceil(aircraft.seats_f / cols) : 0;
+        const rowsC = aircraft.seats_c > 0 ? Math.ceil(aircraft.seats_c / cols) : 0;
+        const rowsY = rows.length - rowsF - rowsC;
+        
+        this.layoutConfig.firstClass.rows = rowsF;
+        this.layoutConfig.firstClass.columns = cols;
+        this.layoutConfig.businessClass.rows = rowsC;
+        this.layoutConfig.businessClass.columns = cols;
+        this.layoutConfig.economyClass.rows = rowsY > 0 ? rowsY : 0;
+        this.layoutConfig.economyClass.columns = cols;
+        
+        this.updateLayoutGrids();
+        
+        // Parse existing layout
+        rows.forEach((row, idx) => {
+            const rowArray = row.split('').map(c => parseInt(c));
+            if (idx < rowsF && this.layoutConfig.firstClass.grid[idx]) {
+                this.layoutConfig.firstClass.grid[idx] = rowArray;
+            } else if (idx < rowsF + rowsC && this.layoutConfig.businessClass.grid[idx - rowsF]) {
+                this.layoutConfig.businessClass.grid[idx - rowsF] = rowArray;
+            } else if (this.layoutConfig.economyClass.grid[idx - rowsF - rowsC]) {
+                this.layoutConfig.economyClass.grid[idx - rowsF - rowsC] = rowArray;
+            }
+        });
+        
+        this.calculateSeats();
+    },
+    updateLayoutGrids() {
+        ['firstClass', 'businessClass', 'economyClass'].forEach(cls => {
+            const config = this.layoutConfig[cls];
+            config.grid = [];
+            for (let i = 0; i < config.rows; i++) {
+                config.grid[i] = [];
+                for (let j = 0; j < config.columns; j++) {
+                    config.grid[i][j] = 0;
+                }
+            }
+        });
+        this.calculateSeats();
+    },
+    toggleCell(className, row, col) {
+        const config = this.layoutConfig[className];
+        if (config.grid[row] && config.grid[row][col] !== undefined) {
+            config.grid[row][col] = config.grid[row][col] === 1 ? 0 : 1;
+            this.calculateSeats();
+        }
+    },
+    calculateSeats() {
+        ['firstClass', 'businessClass', 'economyClass'].forEach(cls => {
+            const config = this.layoutConfig[cls];
+            config.seats = config.grid.reduce((total, row) => 
+                total + row.filter(cell => cell === 1).length, 0
+            );
+        });
+    },
+    generateLayoutString() {
+        let layout = [];
+        
+        ['firstClass', 'businessClass', 'economyClass'].forEach(cls => {
+            const config = this.layoutConfig[cls];
+            config.grid.forEach(row => {
+                layout.push(row.join(''));
+            });
+        });
+        
+        return layout.join(' ');
+    },
     getAircraftSeatNumber(row, col) {
         if (!this.visualData || !this.visualData.layout) return '';
         const layout = this.visualData.layout;
@@ -71,6 +163,9 @@ require base_path('Http/views/partials/nav.php');
 
     <!-- Visual Modal -->
     <?php require base_path('Http/views/aircraft/visual.php') ?>
+
+    <!-- Layout Builder Modal -->
+    <?php require base_path('Http/views/aircraft/layout_builder.php') ?>
 
     <!-- Filter Component -->
     <?php require base_path('Http/views/partials/filter.php') ?>
@@ -137,8 +232,12 @@ require base_path('Http/views/partials/nav.php');
                                         Delete
                                     </button>
                                     <button @click="showVisualModal=true; visualData = <?= htmlspecialchars(json_encode($plane)) ?>" type="button"
-                                        class="px-6 py-2 bg-green-700 w-24 text-white border border-green-700 hover:scale-105 rounded transition duration-100 cursor-pointer">
+                                        class="px-6 py-2 mr-1 bg-green-700 w-24 text-white border border-green-700 hover:scale-105 rounded transition duration-100 cursor-pointer">
                                         Visualize
+                                    </button>
+                                    <button @click="initLayoutBuilder(<?= htmlspecialchars(json_encode($plane)) ?>)" type="button"
+                                        class="px-6 py-2 bg-neutral-800 w-24 text-white border border-neutral-700 hover:scale-105 rounded transition duration-100 cursor-pointer">
+                                        Edit Layout
                                     </button>
                                 </td>
                             <?php endif; ?>
