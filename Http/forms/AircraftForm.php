@@ -19,7 +19,7 @@ class AircraftForm extends Form
         }
 
         if (!Validator::string($this->attributes['model'], 5, 100)) {
-            $this->errors['model'] = "Enter a valid aircraft model";
+            $this->errors['model'] = "Enter a valid aircraft";
         }
     }
 }

@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `aircraft` (
 INSERT INTO `aircraft` (`id`, `iata`, `icao`, `model`, `seats_f`, `seats_c`, `seats_y`, `rows`, `columns`, `layout`) VALUES
 	(1, 'E90', 'E190', 'Embraer E190 Custom', 3, 6, 27, 12, 4, '1011 1011 1011 1011 1011 1011 1011 1011 1011 1011 1011 1011'),
 	(2, 'CRJ', 'CRJ9', 'Bombardier CRJ-900', 8, 8, 24, 10, 5, '11011 11011 11011 11011 11011 11011 11011 11011 11011 11011'),
-	(3, 'AT7', 'AT72', 'ATR 72-600', 0, 0, 48, 12, 5, '11011'),
+	(3, 'AT7', 'AT72', 'ATR 72-600', 2, 2, 2, 3, 5, '10001 10001 10001'),
 	(4, 'E35', 'E135', 'Embraer Legacy 600', 20, 0, 0, 10, 3, '101'),
 	(5, 'ER4', 'E145', 'Embraer ERJ-145', 0, 6, 39, 15, 4, '1011');
 
@@ -154,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `flight_schedules` (
 
 -- Dumping data for table amadeus.flight_schedules: ~10 rows (approximately)
 INSERT INTO `flight_schedules` (`id`, `airline_user_id`, `flight_route_id`, `aircraft_id`, `date_departure`, `time_departure`, `date_arrival`, `time_arrival`, `status`, `price_f`, `price_c`, `price_y`) VALUES
-	(1, 1, 1, 1, '2025-11-25', '08:00', '2025-11-25', '20:00', 'Scheduled', 0.00, 1500.00, 400.00),
+	(1, 1, 1, 1, '2025-11-25', '08:00', '2025-11-25', '20:00', 'boarding', 3800.00, 1500.00, 400.00),
 	(2, 2, 3, 2, '2025-11-26', '10:00', '2025-11-27', '05:00', 'Scheduled', 0.00, 1800.00, 500.00),
 	(3, 5, 4, 3, '2025-11-28', '14:00', '2025-11-28', '22:00', 'Scheduled', 0.00, 0.00, 200.00),
 	(4, 3, 6, 4, '2025-11-29', '09:00', '2025-11-29', '16:00', 'Scheduled', 5000.00, 0.00, 0.00),

@@ -237,7 +237,7 @@ require base_path('Http/views/partials/nav.php');
                                     </button>
                                     <button @click="initLayoutBuilder(<?= htmlspecialchars(json_encode($plane)) ?>)" type="button"
                                         class="px-6 py-2 bg-neutral-800 w-24 text-white border border-neutral-700 hover:scale-105 rounded transition duration-100 cursor-pointer">
-                                        Edit Layout
+                                        Layout
                                     </button>
                                 </td>
                             <?php endif; ?>

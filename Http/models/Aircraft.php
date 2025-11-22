@@ -15,7 +15,7 @@ class Aircraft
         $this->db = App::resolve(Database::class);
     }
 
-    public function store(array $attributes) : void
+    public function store(array $attributes): void
     {
         $this->db->query('INSERT INTO aircraft (iata, icao, model) VALUES (:iata, :icao, :model)', [
             'iata' => $attributes['iata'],
@@ -45,5 +45,21 @@ class Aircraft
         ]);
 
         Session::flash('success', 'Aircraft deleted successfully!');
+    }
+
+    public function update_layout(array $attributes): void
+    {
+        // Update aircraft table
+        $this->db->query('UPDATE aircraft SET layout = :layout, `rows` = :rows, `columns` = :columns, seats_f = :seats_f, seats_c = :seats_c, seats_y = :seats_y WHERE id = :id', [
+            'layout' => $attributes['layout'],
+            'rows' => $attributes['rows'],
+            'columns' => $attributes['columns'],
+            'seats_f' => $attributes['seats_f'],
+            'seats_c' => $attributes['seats_c'],
+            'seats_y' => $attributes['seats_y'],
+            'id' => $attributes['id'],
+        ]);
+
+        Session::flash('success', 'Aircraft layout updated successfully!');
     }
 }
