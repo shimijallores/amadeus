@@ -20,7 +20,7 @@ require base_path('Http/views/partials/nav.php');
         
         const rowLayout = rows[row - 1];
         const columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'];
-            
+
         let seatCount = 0;
         for (let i = 0; i < col; i++) {
             if (rowLayout[i] === '1') {
@@ -36,6 +36,13 @@ require base_path('Http/views/partials/nav.php');
         const seat = this.scheduleData.find(s => s.seat_no === seatNumber);
         return seat ? seat.seat_status : 'available';
     },
+    getSeatId(row, col) {
+        if (!this.scheduleData || this.scheduleData.length === 0) return 'No details available';
+        const seatNumber = this.getSeatNumber(row, col);
+        const seat = this.scheduleData.find(s => s.seat_no === seatNumber);
+        
+        return seat.seat_id;
+    },
     getSeatDetails(row, col) {
         if (!this.scheduleData || this.scheduleData.length === 0) return 'No details available';
         const seatNumber = this.getSeatNumber(row, col);
@@ -49,7 +56,6 @@ require base_path('Http/views/partials/nav.php');
         details += `Customer: ${seat.customer_name || 'N/A'}\n`;
         details += `Class: ${className}\n`;
         details += `Status: ${seat.seat_status}\n`;
-        details += `Id: ${seat.seat_id}`;
         
         return details;
     },
@@ -197,7 +203,7 @@ require base_path('Http/views/partials/nav.php');
                                     class="px-6 py-2 m-2 bg-neutral-900 min-w-10 text-white border border-black hover:scale-105 rounded transition duration-100 cursor-pointer">
                                     Seats
                                 </button>
-                                <button @click="showVisualModal=true; scheduleData=<?= htmlspecialchars(json_encode($schedule['seats'])) ?>; console.log(scheduleData);" type="button"
+                                <button @click="showVisualModal=true; scheduleData=<?= htmlspecialchars(json_encode($schedule['seats'])) ?>" type="button"
                                     class="px-6 py-2 m-2 bg-green-700 min-w-10 text-white border border-green-700 hover:scale-105 rounded transition duration-100 cursor-pointer">
                                     Visualize
                                 </button>
