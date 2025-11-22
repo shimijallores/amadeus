@@ -11,8 +11,24 @@ require base_path('Http/views/partials/nav.php');
     showVisualModal: false, 
     scheduleData: [],
     getSeatNumber(row, col) {
+        if (!this.scheduleData || this.scheduleData.length === 0) return '';
+        const layout = this.scheduleData[0]?.layout;
+        if (!layout) return '';
+        
+        const rows = layout.split(' ');
+        if (row < 1 || row > rows.length) return '';
+        
+        const rowLayout = rows[row - 1];
         const columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'];
-        return row + columns[col - 1];
+            
+        let seatCount = 0;
+        for (let i = 0; i < col; i++) {
+            if (rowLayout[i] === '1') {
+                seatCount++;
+            }
+        }
+        
+        return row + columns[seatCount - 1];
     },
     getSeatStatus(row, col) {
         if (!this.scheduleData || this.scheduleData.length === 0) return 'available';
@@ -32,7 +48,8 @@ require base_path('Http/views/partials/nav.php');
         details += `Ticket ID: ${seat.ticket_id || 'N/A'}\n`;
         details += `Customer: ${seat.customer_name || 'N/A'}\n`;
         details += `Class: ${className}\n`;
-        details += `Status: ${seat.seat_status}`;
+        details += `Status: ${seat.seat_status}\n`;
+        details += `Id: ${seat.seat_id}`;
         
         return details;
     },

@@ -62,7 +62,7 @@
                                                     'border-red-400': getSeatStatus(rowIndex + 1, colIndex + 1) === 'occupied',
                                                     'border-gray-500': getSeatStatus(rowIndex + 1, colIndex + 1) === 'blocked'
                                                 }"
-                                                x-text="getSeatNumber(rowIndex + 1, colIndex + 1)"
+                                                x-text="col === '1' ? getSeatNumber(rowIndex + 1, colIndex + 1) : ''"
                                                 :title="getSeatDetails(rowIndex + 1, colIndex + 1)">
                                             </div>
                                             <div x-show="col === '0'" class="w-10 h-10 flex items-center justify-center text-neutral-400 text-xs">
