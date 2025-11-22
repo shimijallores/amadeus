@@ -44,75 +44,75 @@
       <!-- Left Side: Configuration Panel -->
       <div class="w-full grid grid-cols-[30%_65%] gap-x-10">
         <!-- Class Configuration -->
-        <div class="space-y-4">
+        <div class="space-y-3">
           <!-- First Class -->
-          <div class="border border-neutral-300 dark:border-neutral-700 rounded p-4">
-            <h4 class="font-semibold mb-3 text-center">First Class</h4>
-            <div class="space-y-3">
+          <div class="border border-neutral-300 dark:border-neutral-700 rounded p-2">
+            <h4 class="font-semibold mb-2 text-center text-sm">First Class</h4>
+            <div class="space-y-2">
               <div>
-                <label class="block text-sm mb-1">Rows</label>
+                <label class="block text-xs mb-1">Rows</label>
                 <input type="number" x-model.number="layoutConfig.firstClass.rows" min="0" max="50"
                   @input="updateLayoutGrids()"
-                  class="w-full px-3 py-2 border border-neutral-300 rounded focus:outline-none focus:ring-2 focus:ring-black dark:bg-neutral-800 dark:border-neutral-600">
+                  class="w-full px-2 py-1 text-sm border border-neutral-300 rounded focus:outline-none focus:ring-2 focus:ring-black dark:bg-neutral-800 dark:border-neutral-600">
               </div>
               <div>
-                <label class="block text-sm mb-1">Columns</label>
+                <label class="block text-xs mb-1">Columns</label>
                 <input type="number" x-model.number="layoutConfig.firstClass.columns" min="0" max="11"
                   @input="updateLayoutGrids()"
-                  class="w-full px-3 py-2 border border-neutral-300 rounded focus:outline-none focus:ring-2 focus:ring-black dark:bg-neutral-800 dark:border-neutral-600">
+                  class="w-full px-2 py-1 text-sm border border-neutral-300 rounded focus:outline-none focus:ring-2 focus:ring-black dark:bg-neutral-800 dark:border-neutral-600">
               </div>
               <div>
-                <label class="block text-sm mb-1">Total Seats</label>
+                <label class="block text-xs mb-1">Total Seats</label>
                 <input type="number" x-model.number="layoutConfig.firstClass.seats" min="0"
-                  class="w-full px-3 py-2 border border-neutral-300 rounded bg-neutral-100 dark:bg-neutral-800 dark:border-neutral-600" readonly>
+                  class="w-full px-2 py-1 text-sm border border-neutral-300 rounded bg-neutral-100 dark:bg-neutral-800 dark:border-neutral-600" readonly>
               </div>
             </div>
           </div>
 
           <!-- Business Class -->
-          <div class="border border-neutral-300 dark:border-neutral-700 rounded p-4">
-            <h4 class="font-semibold mb-3 text-center">Business Class</h4>
-            <div class="space-y-3">
+          <div class="border border-neutral-300 dark:border-neutral-700 rounded p-2">
+            <h4 class="font-semibold mb-2 text-center text-sm">Business Class</h4>
+            <div class="space-y-2">
               <div>
-                <label class="block text-sm mb-1">Rows</label>
+                <label class="block text-xs mb-1">Rows</label>
                 <input type="number" x-model.number="layoutConfig.businessClass.rows" min="0" max="50"
                   @input="updateLayoutGrids()"
-                  class="w-full px-3 py-2 border border-neutral-300 rounded focus:outline-none focus:ring-2 focus:ring-black dark:bg-neutral-800 dark:border-neutral-600">
+                  class="w-full px-2 py-1 text-sm border border-neutral-300 rounded focus:outline-none focus:ring-2 focus:ring-black dark:bg-neutral-800 dark:border-neutral-600">
               </div>
               <div>
-                <label class="block text-sm mb-1">Columns</label>
+                <label class="block text-xs mb-1">Columns</label>
                 <input type="number" x-model.number="layoutConfig.businessClass.columns" min="0" max="11"
                   @input="updateLayoutGrids()"
-                  class="w-full px-3 py-2 border border-neutral-300 rounded focus:outline-none focus:ring-2 focus:ring-black dark:bg-neutral-800 dark:border-neutral-600">
+                  class="w-full px-2 py-1 text-sm border border-neutral-300 rounded focus:outline-none focus:ring-2 focus:ring-black dark:bg-neutral-800 dark:border-neutral-600">
               </div>
               <div>
-                <label class="block text-sm mb-1">Total Seats</label>
+                <label class="block text-xs mb-1">Total Seats</label>
                 <input type="number" x-model.number="layoutConfig.businessClass.seats" min="0"
-                  class="w-full px-3 py-2 border border-neutral-300 rounded bg-neutral-100 dark:bg-neutral-800 dark:border-neutral-600" readonly>
+                  class="w-full px-2 py-1 text-sm border border-neutral-300 rounded bg-neutral-100 dark:bg-neutral-800 dark:border-neutral-600" readonly>
               </div>
             </div>
           </div>
 
           <!-- Economy Class -->
-          <div class="border border-neutral-300 dark:border-neutral-700 rounded p-4">
-            <h4 class="font-semibold mb-3 text-center">Economy Class</h4>
-            <div class="space-y-3">
+          <div class="border border-neutral-300 dark:border-neutral-700 rounded p-2">
+            <h4 class="font-semibold mb-2 text-center text-sm">Economy Class</h4>
+            <div class="space-y-2">
               <div>
-                <label class="block text-sm mb-1">Rows</label>
+                <label class="block text-xs mb-1">Rows</label>
                 <input type="number" x-model.number="layoutConfig.economyClass.rows" min="0" max="50"
                   @input="updateLayoutGrids()"
-                  class="w-full px-3 py-2 border border-neutral-300 rounded focus:outline-none focus:ring-2 focus:ring-black dark:bg-neutral-800 dark:border-neutral-600">
+                  class="w-full px-2 py-1 text-sm border border-neutral-300 rounded focus:outline-none focus:ring-2 focus:ring-black dark:bg-neutral-800 dark:border-neutral-600">
               </div>
               <div>
-                <label class="block text-sm mb-1">Columns</label>
+                <label class="block text-xs mb-1">Columns</label>
                 <input type="number" x-model.number="layoutConfig.economyClass.columns" min="0" max="11"
                   @input="updateLayoutGrids()"
-                  class="w-full px-3 py-2 border border-neutral-300 rounded focus:outline-none focus:ring-2 focus:ring-black dark:bg-neutral-800 dark:border-neutral-600">
+                  class="w-full px-2 py-1 text-sm border border-neutral-300 rounded focus:outline-none focus:ring-2 focus:ring-black dark:bg-neutral-800 dark:border-neutral-600">
               </div>
               <div>
-                <label class="block text-sm mb-1">Total Seats</label>
+                <label class="block text-xs mb-1">Total Seats</label>
                 <input type="number" x-model.number="layoutConfig.economyClass.seats" min="0"
-                  class="w-full px-3 py-2 border border-neutral-300 rounded bg-neutral-100 dark:bg-neutral-800 dark:border-neutral-600" readonly>
+                  class="w-full px-2 py-1 text-sm border border-neutral-300 rounded bg-neutral-100 dark:bg-neutral-800 dark:border-neutral-600" readonly>
               </div>
             </div>
           </div>
@@ -129,7 +129,7 @@
                   <div class="flex gap-1">
                     <div class="w-8 text-xs text-center font-semibold text-neutral-500 flex items-center justify-center" x-text="row"></div>
                     <template x-for="col in layoutConfig.firstClass.columns" :key="'f-' + row + '-' + col">
-                      <div @click="toggleCell('firstClass', row - 1, col - 1)"
+                      <div @mouseover="toggleCell('firstClass', row - 1, col - 1)"
                         class="w-10 h-10 flex items-center justify-center text-xs font-semibold rounded border-2 cursor-pointer transition hover:scale-110 duration-200"
                         :class="layoutConfig.firstClass.grid[row - 1][col - 1] === 1 ? 'border-blue-500 bg-blue-100 dark:bg-blue-900/50' : 'border-gray-400 bg-gray-100 dark:bg-gray-800'"
                         :title="layoutConfig.firstClass.grid[row - 1][col - 1] === 1 ? 'Seat' : 'Hallway'">
@@ -151,7 +151,7 @@
                   <div class="flex gap-1">
                     <div class="w-8 text-xs text-center font-semibold text-neutral-500 flex items-center justify-center" x-text="layoutConfig.firstClass.rows + row"></div>
                     <template x-for="col in layoutConfig.businessClass.columns" :key="'b-' + row + '-' + col">
-                      <div @click="toggleCell('businessClass', row - 1, col - 1)"
+                      <div @mouseover="toggleCell('businessClass', row - 1, col - 1)"
                         class="w-10 h-10 flex items-center justify-center text-xs font-semibold rounded border-2 cursor-pointer transition hover:scale-110 duration-200"
                         :class="layoutConfig.businessClass.grid[row - 1][col - 1] === 1 ? 'border-blue-500 bg-blue-100 dark:bg-blue-900/50' : 'border-gray-400 bg-gray-100 dark:bg-gray-800'"
                         :title="layoutConfig.businessClass.grid[row - 1][col - 1] === 1 ? 'Seat' : 'Hallway'">
@@ -174,7 +174,7 @@
                     <div class="w-8 text-xs text-center font-semibold text-neutral-500 flex items-center justify-center"
                       x-text="layoutConfig.firstClass.rows + layoutConfig.businessClass.rows + row"></div>
                     <template x-for="col in layoutConfig.economyClass.columns" :key="'e-' + row + '-' + col">
-                      <div @click="toggleCell('economyClass', row - 1, col - 1)"
+                      <div @mouseover="toggleCell('economyClass', row - 1, col - 1)"
                         class="w-10 h-10 flex items-center justify-center text-xs font-semibold rounded border-2 cursor-pointer transition hover:scale-110 duration-200"
                         :class="layoutConfig.economyClass.grid[row - 1][col - 1] === 1 ? 'border-blue-500 bg-blue-100 dark:bg-blue-900/50' : 'border-gray-400 bg-gray-100 dark:bg-gray-800'"
                         :title="layoutConfig.economyClass.grid[row - 1][col - 1] === 1 ? 'Seat' : 'Hallway'">
